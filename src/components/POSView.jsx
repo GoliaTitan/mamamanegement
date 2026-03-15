@@ -40,11 +40,11 @@ export default function POSView({ onAddToCart, t }) {
   }
 
   return (
-    <div className="flex-1 flex flex-col h-full overflow-hidden p-8 gap-8">
+    <div className="flex-1 flex flex-col h-full overflow-hidden p-6 md:p-10 gap-8">
       {/* Online/Offline Status Indicator */}
       {!isOnline && (
-        <div className="bg-red-500/10 border border-red-500/20 text-red-500 px-4 py-2 rounded-xl text-center text-xs font-bold animate-pulse">
-          {t('sync_offline').toUpperCase()} - MODALITÀ STORE LOCAL
+        <div className="bg-red-500/10 border border-red-500/20 text-red-500 px-6 py-3 rounded-2xl text-center text-[10px] font-black tracking-[0.2em] animate-pulse">
+          {t('sync_offline').toUpperCase()} • MODALITÀ STORE LOCAL
         </div>
       )}
 
@@ -55,67 +55,69 @@ export default function POSView({ onAddToCart, t }) {
         />
       )}
 
-      {/* Header with quick search and categories */}
-      <div className="flex flex-col gap-6">
-        <div className="flex items-center gap-6">
-          <div className="relative flex-1 max-w-xl flex items-center gap-3">
-            <div className="relative flex-1">
-              <Search size={20} className="absolute left-5 top-1/2 -translate-y-1/2 text-white/30" />
+      {/* Header with luxury search and categories */}
+      <div className="flex flex-col gap-10">
+        <div className="flex flex-col lg:flex-row lg:items-center gap-6">
+          <div className="relative flex-1 flex items-center gap-4">
+            <div className="relative flex-1 group">
+              <Search size={22} className="absolute left-6 top-1/2 -translate-y-1/2 text-white/20 group-focus-within:text-mamy-green transition-colors" />
               <input 
                 type="text" 
                 placeholder={t('search_product')} 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-2xl pl-14 pr-6 py-4 text-base outline-none focus:border-mamy-green/30 focus:bg-white/10 transition-all font-medium"
+                className="w-full bg-white/[0.03] border border-white/10 rounded-[2rem] pl-16 pr-8 py-5 text-lg outline-none focus:border-mamy-green/40 focus:bg-white/[0.05] transition-all font-medium placeholder:text-white/10"
               />
             </div>
             <button 
               onClick={() => setShowScanner(true)}
-              className="shrink-0 w-[58px] h-[58px] flex items-center justify-center bg-white/5 border border-white/10 rounded-2xl text-white/40 hover:text-white hover:bg-white/10 transition-all active:scale-95 shadow-lg"
+              className="shrink-0 w-[68px] h-[68px] flex items-center justify-center bg-white/[0.03] border border-white/10 rounded-[1.8rem] text-white/30 hover:text-white hover:bg-white/10 active:scale-95 transition-all shadow-2xl glass-panel"
             >
-              <Camera size={24} />
+              <Camera size={26} />
             </button>
           </div>
           
-          {/* Dropdown Categories (All devices) */}
-          <div className="relative min-w-[200px] flex items-center bg-white/5 rounded-2xl border border-white/10 px-4 py-3 hover:bg-white/10 transition-all cursor-pointer">
-            <select 
-              className="w-full bg-transparent text-white font-black uppercase tracking-widest text-sm outline-none appearance-none cursor-pointer pr-8"
-              value={activeCategory}
-              onChange={(e) => setActiveCategory(e.target.value)}
-            >
-              {categories.map(cat => (
-                <option key={cat} value={cat} className="bg-[#050505] text-white py-4">
-                  {cat}
-                </option>
-              ))}
-            </select>
-            <div className="absolute right-4 pointer-events-none text-white/40">
-              <Plus size={16} className="rotate-45" />
-            </div>
+          {/* Categories Selector - Refined for iPad */}
+          <div className="flex items-center gap-3 overflow-x-auto no-scrollbar pb-2 lg:pb-0">
+            {categories.map(cat => (
+              <button
+                key={cat}
+                onClick={() => setActiveCategory(cat)}
+                className={`shrink-0 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] italic border transition-all duration-500 ${
+                  activeCategory === cat
+                  ? 'bg-mamy-green text-black border-mamy-green shadow-[0_10px_25px_rgba(57,211,83,0.3)]'
+                  : 'bg-white/[0.03] text-white/40 border-white/5 hover:text-white hover:bg-white/10'
+                }`}
+              >
+                {cat}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Best Sellers Section */}
+        {/* Best Sellers Section - Enhanced Luxury */}
         {bestSellers.length > 0 && (
-          <div className="flex flex-col gap-4">
-            <div className="flex items-center gap-3">
-              <div className="w-1 h-4 bg-mamy-green rounded-full shadow-[0_0_10px_rgba(57,211,83,0.5)]" />
-              <h2 className="text-xs font-black uppercase tracking-[0.3em] text-white/40">{t('best_sellers')} (Fast Add)</h2>
+          <div className="flex flex-col gap-6">
+            <div className="flex items-center justify-between px-2">
+              <div className="flex items-center gap-4">
+                <div className="w-1.5 h-6 bg-mamy-green rounded-full shadow-[0_0_15px_rgba(57,211,83,0.5)]" />
+                <h2 className="text-xs font-black uppercase tracking-[0.4em] text-white/30 italic">{t('best_sellers')} • Fast Selection</h2>
+              </div>
             </div>
-            <div className="flex gap-4 overflow-x-auto pb-4 custom-scrollbar no-scrollbar-y">
+            <div className="flex gap-6 overflow-x-auto pb-6 no-scrollbar">
               {bestSellers.map(p => (
                 <button 
                   key={`best-${p.id}`}
                   onClick={() => handleAddToCart(p)}
-                  className="shrink-0 flex items-center gap-4 p-4 glass-card bg-white/5 border-white/5 hover:border-mamy-green/30 transition-all w-64 group active:scale-[0.98]"
+                  className="shrink-0 flex items-center gap-5 p-5 glass-card group active:scale-[0.98] w-72"
                 >
-                  <div className="w-12 h-12 rounded-xl bg-white/5 p-1 shrink-0 group-hover:bg-mamy-green/10 transition-colors">
-                    <img src={p.image} alt={p.name} className="w-full h-full object-contain" />
+                  <div className="w-16 h-16 rounded-2xl bg-white/[0.05] p-2 shrink-0 group-hover:bg-white/10 transition-colors border border-white/5">
+                    <img src={p.image} alt={p.name} className="w-full h-full object-contain drop-shadow-lg" />
                   </div>
                   <div className="flex flex-col items-start truncate overflow-hidden">
-                    <span className="text-sm font-black text-white/90 truncate w-full text-left">{p.name}</span>
-                    <span className="text-xs font-bold text-mamy-green">{p.on_sale ? p.sale_price : p.price}€</span>
+                    <span className="text-[10px] font-black text-mamy-green uppercase tracking-widest mb-1 italic">{p.category}</span>
+                    <span className="text-base font-black text-white/90 truncate w-full text-left">{p.name}</span>
+                    <span className="text-sm font-bold text-white/40">{p.on_sale ? p.sale_price : p.price}€</span>
                   </div>
                 </button>
               ))}
@@ -124,76 +126,78 @@ export default function POSView({ onAddToCart, t }) {
         )}
       </div>
 
-      {/* Product Grid */}
-      <div className="flex-1 overflow-y-auto custom-scrollbar pr-4 pb-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+      {/* Luxury Product Grid */}
+      <div className="flex-1 overflow-y-auto no-scrollbar pr-2 pb-32">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-8">
           {filteredProducts.map((product) => (
-            <div key={product.id} className="glass-card overflow-hidden group">
-              {/* Product Image */}
-              <div className="h-64 relative bg-[#f8faf8] flex items-center justify-center p-6 rounded-t-2xl">
+            <div key={product.id} className="glass-card group flex flex-col">
+              {/* Product Image Area - Refined background */}
+              <div className="h-72 relative bg-gradient-to-br from-white/[0.05] to-transparent flex items-center justify-center p-8 rounded-t-[2rem] overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.05),transparent_70%)]" />
+                
                 {product.image ? (
                   <img 
                     src={product.image} 
                     alt={product.name} 
-                    className="w-full h-full object-contain drop-shadow-[0_20px_40px_rgba(0,0,0,0.4)] group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-contain drop-shadow-[0_30px_50px_rgba(0,0,0,0.6)] group-hover:scale-110 transition-transform duration-700 ease-out"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center text-black/10">
-                    <Package size={64} />
+                  <div className="w-full h-full flex items-center justify-center text-white/5">
+                    <Package size={80} strokeWidth={1} />
                   </div>
                 )}
                 
                 {product.on_sale && (
-                  <div className="absolute top-4 left-4 px-3 py-1 bg-amber-400 text-black text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg shadow-amber-400/20 animate-pulse">
-                    Offerta
+                  <div className="absolute top-6 left-6 px-4 py-2 bg-amber-400 text-black text-[9px] font-black uppercase tracking-[0.2em] italic rounded-xl shadow-2xl shadow-amber-400/20 animate-pulse">
+                    Special Offer
                   </div>
                 )}
 
-                <button className="absolute top-4 right-4 p-2 bg-white/5 rounded-full text-white/40 hover:text-white hover:bg-white/10 transition-all">
-                  <Info size={16} />
+                <button className="absolute top-6 right-6 p-3 bg-white/5 backdrop-blur-md rounded-2xl text-white/20 hover:text-mamy-green hover:bg-white/10 border border-white/10 transition-all">
+                  <Info size={18} />
                 </button>
               </div>
 
-              {/* Product Details */}
-              <div className="p-6 pt-2">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-mamy-green text-[10px] font-black tracking-[0.2em] uppercase">{product.category || 'MATERIA'}</span>
-                  <div className="h-px flex-1 bg-white/5"></div>
+              {/* Product Details - Premium Typography */}
+              <div className="p-8 pt-4 flex flex-col flex-1">
+                <div className="flex items-center gap-3 mb-4">
+                  <span className="text-mamy-green text-[10px] font-black tracking-[0.3em] uppercase italic">{product.category || 'COLLECTION'}</span>
+                  <div className="h-px flex-1 bg-white/10"></div>
                 </div>
                 
-                <h3 className="text-xl font-black text-white/90 mb-1 line-clamp-1">{product.name}</h3>
-                <p className="text-[11px] font-bold text-white/40 uppercase tracking-wide mb-1">{product.type}</p>
+                <h3 className="text-2xl font-black text-white mb-2 line-clamp-2 tracking-tight leading-tight">{product.name}</h3>
+                <p className="text-[11px] font-bold text-white/30 uppercase tracking-[0.2em] mb-8">{product.type}</p>
                 
-                <div className="flex items-center justify-between mt-auto pt-6 border-t border-white/5">
+                <div className="mt-auto pt-6 flex items-center justify-between border-t border-white/10">
                   <div className="flex flex-col">
                     {product.on_sale ? (
                       <>
                         <span className="text-2xl font-black text-amber-400">{product.sale_price}€</span>
-                        <span className="text-[10px] text-white/20 font-bold uppercase tracking-widest line-through decoration-white/40">{product.price}€</span>
+                        <span className="text-xs text-white/20 font-bold uppercase tracking-widest line-through decoration-white/40">{product.price}€</span>
                       </>
                     ) : (
-                      <span className="text-2xl font-black text-white">{product.price}€</span>
+                      <span className="text-2xl font-black text-white/90 tracking-tighter">{product.price}€</span>
                     )}
-                    <span className="text-[10px] text-white/20 font-bold uppercase tracking-widest">/ {product.unit}</span>
+                    <span className="text-[10px] text-white/20 font-black uppercase tracking-[0.2em] mt-1 italic">/ {product.unit}</span>
                   </div>
                   
-                  <div className="flex gap-2">
-                    <button 
-                      onClick={() => handleAddToCart(product)}
-                      className="w-12 h-12 flex items-center justify-center bg-mamy-green/10 border border-mamy-green/20 rounded-xl text-mamy-green hover:bg-mamy-green hover:text-black transition-all active:scale-90 shadow-[0_0_20px_rgba(57,211,83,0.1)]"
-                    >
-                      <Plus size={20} />
-                    </button>
-                  </div>
+                  <button 
+                    onClick={() => handleAddToCart(product)}
+                    className="w-16 h-16 flex items-center justify-center bg-white/[0.03] border border-white/10 rounded-[1.5rem] text-mamy-green hover:bg-mamy-green hover:text-black hover:scale-105 transition-all duration-500 shadow-2xl active:scale-90"
+                  >
+                    <Plus size={24} strokeWidth={3} />
+                  </button>
                 </div>
               </div>
             </div>
           ))}
         </div>
         {filteredProducts.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-20 text-white/20 gap-4">
-            <Search size={48} />
-            <p className="font-black uppercase tracking-widest text-sm">{t('no_results')}</p>
+          <div className="flex flex-col items-center justify-center py-32 text-white/10 gap-6">
+            <div className="w-24 h-24 flex items-center justify-center bg-white/5 rounded-full border border-white/5">
+              <Search size={40} strokeWidth={1} />
+            </div>
+            <p className="font-black uppercase tracking-[0.3em] text-[10px] italic">{t('no_results')}</p>
           </div>
         )}
       </div>

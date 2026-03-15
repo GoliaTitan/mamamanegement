@@ -52,7 +52,7 @@ export default function LoginView({ onLogin }) {
   const handleSubmitPIN = async () => {
     const user = await db.users.get(email.toLowerCase());
     if (user && user.pin === pin) {
-      onLogin({ ...user, store: selectedStore });
+      onLogin({ ...user, storeId: selectedStore.id });
     } else {
       setError('PIN errato. Riprova.');
       setPin('');
