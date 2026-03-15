@@ -77,35 +77,22 @@ export default function POSView({ onAddToCart, t }) {
             </button>
           </div>
           
-          {/* Responsive Categories */}
-          <div className="flex items-center gap-3 p-1.5 bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
-            {/* Horizontal Scroll on Desktop/Tablet */}
-            <div className="hidden md:flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5 px-0.5">
-              {categories.map(cat => (
-                <button
-                  key={cat}
-                  onClick={() => setActiveCategory(cat)}
-                  className={`px-6 py-2.5 rounded-xl text-[10px] font-black tracking-widest transition-all whitespace-nowrap ${
-                    activeCategory === cat 
-                    ? 'bg-white/10 text-white border border-white/20' 
-                    : 'text-white/40 hover:text-white/60 hover:bg-white/5'
-                  }`}
-                >
-                  {cat}
-                </button>
-              ))}
-            </div>
-
-            {/* Dropdown on Mobile */}
+          {/* Dropdown Categories (All devices) */}
+          <div className="relative min-w-[200px] flex items-center bg-white/5 rounded-2xl border border-white/10 px-4 py-3 hover:bg-white/10 transition-all cursor-pointer">
             <select 
-              className="md:hidden bg-transparent text-white/60 text-xs font-black tracking-widest px-4 py-2 outline-none w-full appearance-none"
+              className="w-full bg-transparent text-white font-black uppercase tracking-widest text-sm outline-none appearance-none cursor-pointer pr-8"
               value={activeCategory}
               onChange={(e) => setActiveCategory(e.target.value)}
             >
               {categories.map(cat => (
-                <option key={cat} value={cat} className="bg-[#0a0a0a] text-white">{cat}</option>
+                <option key={cat} value={cat} className="bg-[#050505] text-white py-4">
+                  {cat}
+                </option>
               ))}
             </select>
+            <div className="absolute right-4 pointer-events-none text-white/40">
+              <Plus size={16} className="rotate-45" />
+            </div>
           </div>
         </div>
 

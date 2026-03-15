@@ -195,6 +195,18 @@ export default function DeveloperSettings({ user, onLogout, onUpdatePIN, onSync,
     }
   };
 
+  const handleUpdateProductCategory = async (productId, newCategory) => {
+    try {
+      await db.products.update(productId, { 
+        category: newCategory,
+        needsSync: true
+      });
+      loadData();
+    } catch (err) {
+      alert('Errore durante l\'aggiornamento della categoria');
+    }
+  };
+
   const handleSetProductOffer = async (productId, onSale, salePrice) => {
     try {
       await db.products.update(productId, { 
@@ -427,6 +439,16 @@ export default function DeveloperSettings({ user, onLogout, onUpdatePIN, onSync,
                       </div>
 
                       <div className="flex items-center gap-4">
+                        <select 
+                          className="bg-white/5 border border-white/10 rounded-xl px-3 py-2 text-[10px] font-black uppercase text-white/60 outline-none focus:border-emerald-400/40"
+                          value={p.category}
+                          onChange={(e) => handleUpdateProductCategory(p.id, e.target.value)}
+                        >
+                          {['FLOWERS', 'OILS', 'EDIBLES', 'VAPE KIT CBD', 'HEMP CARE', 'SEEDS'].map(cat => (
+                            <option key={cat} value={cat} className="bg-mamy-dark text-white">{cat}</option>
+                          ))}
+                        </select>
+
                         <button 
                           onClick={() => handleToggleBestSeller(p.id, p.is_best_seller)}
                           className={`flex items-center gap-2 px-4 py-2 rounded-xl text-[10px] font-black uppercase tracking-widest transition-all ${p.is_best_seller ? 'bg-mamy-green text-black shadow-lg shadow-mamy-green/20' : 'bg-white/5 text-white/20 hover:text-white'}`}

@@ -22,15 +22,15 @@ export function usePOSData() {
         await initLocalDB(initialProducts.map((p, idx) => ({
           id: idx + 1,
           name: p.name,
-          price: p.price,
-          on_sale: idx % 10 === 0, // Simulate some offers
-          sale_price: p.price * 0.8,
+          price: parseFloat(p.price) || 0,
+          on_sale: p.on_sale || false,
+          sale_price: parseFloat(p.sale_price) || 0,
           is_best_seller: idx < 6, // First 6 are best sellers
           stock: 100, // Initial stock
-          unit: p.variants?.[0]?.title || 'un',
-          image: p.images?.[0] || '',
+          unit: p.unit || 'un',
+          image: p.image || '',
           barcode: '',
-          category: 'FLOWERS',
+          category: p.category || 'FLOWERS',
           type: 'Materia'
         })));
 

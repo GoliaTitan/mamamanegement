@@ -2,7 +2,7 @@ import Dexie from 'dexie';
 
 export const db = new Dexie('MamaMaryPOS');
 
-db.version(8).stores({
+db.version(9).stores({
   products: 'id, name, barcode, category, is_best_seller, stock',
   sales: '++id, timestamp, storeId, status',
   sync_queue: '++id, table, operation, data, timestamp',
