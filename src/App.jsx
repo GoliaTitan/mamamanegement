@@ -294,7 +294,7 @@ export default function App() {
   return (
     <div className="flex h-screen overflow-hidden text-white font-outfit relative">
       {/* Premium Background Layer */}
-      <div className="custom-bg" style={{ backgroundImage: 'url("/bg_mamy_placeholder.jpg")' }} />
+      <div className="custom-bg" style={{ backgroundImage: 'url("/bg_mamy.jpg")' }} />
       
       {/* Background blobs for depth */}
       <div className="blur-overlay w-[600px] h-[600px] bg-mamy-green top-[-200px] left-[-200px]" />
