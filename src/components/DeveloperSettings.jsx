@@ -429,7 +429,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                           maxLength={6}
                           value={newPin}
                           onChange={e => setNewPin(e.target.value.replace(/\D/g, ''))}
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-5 px-6 text-center text-xl tracking-[0.5em] outline-none focus:border-mamy-green/40 focus:bg-white/[0.05] transition-all font-black text-white"
+                          className="w-full bg-white/3 border border-white/10 rounded-2xl py-5 px-6 text-center text-xl tracking-[0.5em] outline-none focus:border-mamy-green/40 focus:bg-white/5 transition-all font-black text-white"
                         />
                       </div>
                       <div className="space-y-3">
@@ -440,7 +440,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                           maxLength={6}
                           value={confirmPin}
                           onChange={e => setConfirmPin(e.target.value.replace(/\D/g, ''))}
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-5 px-6 text-center text-xl tracking-[0.5em] outline-none focus:border-mamy-green/40 focus:bg-white/[0.05] transition-all font-black text-white"
+                          className="w-full bg-white/3 border border-white/10 rounded-2xl py-5 px-6 text-center text-xl tracking-[0.5em] outline-none focus:border-mamy-green/40 focus:bg-white/5 transition-all font-black text-white"
                         />
                       </div>
                     </div>

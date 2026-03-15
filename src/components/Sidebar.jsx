@@ -64,7 +64,7 @@ export default function Sidebar({ activePage, onNavigate, onLogout, user, t, isO
       `}>
       {/* Brand - Luxury Scale */}
       <div className="flex flex-col items-center mb-16 px-4">
-        <div className="w-full flex items-center justify-center p-4 bg-white/[0.03] border border-white/5 rounded-[2.5rem] backdrop-blur-md">
+        <div className="w-full flex items-center justify-center p-4 bg-white/3 border border-white/5 rounded-[2.5rem] backdrop-blur-md">
           <img src="/logo_gold.png" alt="MamaMary Logo" className="w-full h-auto object-contain brightness-110 drop-shadow-[0_0_20px_rgba(218,165,32,0.3)] animate-float" />
         </div>
       </div>
@@ -72,7 +72,7 @@ export default function Sidebar({ activePage, onNavigate, onLogout, user, t, isO
       <div className="flex-1 space-y-10">
         {/* Stores Section - Premium Design */}
         <div className="px-2">
-          <div className="flex items-center gap-4 px-5 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white/40 hover:bg-white/5 transition-all group">
+          <div className="flex items-center gap-4 px-5 py-4 bg-white/3 border border-white/10 rounded-2xl text-white/40 hover:bg-white/5 transition-all group">
             <div className="w-10 h-10 flex items-center justify-center bg-white/5 rounded-xl border border-white/5 text-mamy-gold">
               <Store size={20} />
             </div>
@@ -96,7 +96,7 @@ export default function Sidebar({ activePage, onNavigate, onLogout, user, t, isO
               }`}
             >
               <item.icon size={22} className={`${activePage === item.id ? 'text-mamy-green' : 'group-hover:scale-110 group-hover:text-mamy-green'} transition-all duration-500`} />
-              <span className="text-sm font-black uppercase tracking-[0.1em] italic">{item.label}</span>
+              <span className="text-sm font-black uppercase tracking-widest italic">{item.label}</span>
               
               {activePage === item.id && (
                 <div className="absolute right-0 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-mamy-green rounded-l-full shadow-[0_0_15px_rgba(57,211,83,0.5)]" />

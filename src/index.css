@@ -23,19 +23,19 @@
 
 @layer components {
   .glass-panel {
-    @apply bg-white/[0.03] border border-white/[0.08] backdrop-blur-[50px] rounded-[2.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.8)];
+    @apply bg-white/3 border border-white/8 backdrop-blur-[50px] rounded-[2.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.8)];
   }
 
   .glass-card {
-    @apply bg-white/[0.02] border border-white/[0.05] backdrop-blur-[30px] rounded-[2rem] transition-all duration-700 hover:bg-white/[0.06] hover:border-mamy-green/30 hover:-translate-y-2 shadow-2xl hover:shadow-mamy-green/10;
+    @apply bg-white/2 border border-white/5 backdrop-blur-[30px] rounded-4xl transition-all duration-700 hover:bg-white/6 hover:border-mamy-green/30 hover:-translate-y-2 shadow-2xl hover:shadow-mamy-green/10;
   }
   
   .glass-card-gold {
-    @apply bg-white/[0.02] border border-mamy-gold/20 backdrop-blur-[30px] rounded-[2rem] transition-all duration-700 hover:bg-mamy-gold/5 hover:border-mamy-gold/40 hover:-translate-y-2 shadow-2xl;
+    @apply bg-white/2 border border-mamy-gold/20 backdrop-blur-[30px] rounded-4xl transition-all duration-700 hover:bg-mamy-gold/5 hover:border-mamy-gold/40 hover:-translate-y-2 shadow-2xl;
   }
   
   .glass-input {
-    @apply bg-white/[0.04] border border-white/[0.1] rounded-2xl px-6 py-5 outline-none focus:border-mamy-green/40 focus:bg-white/[0.08] transition-all placeholder:text-white/20 font-medium text-lg;
+    @apply bg-white/4 border border-white/10 rounded-2xl px-6 py-5 outline-none focus:border-mamy-green/40 focus:bg-white/8 transition-all placeholder:text-white/20 font-medium text-lg;
   }
 
   .btn-mamy {
@@ -48,7 +48,7 @@
   }
   
   .btn-glass {
-    @apply bg-white/[0.05] border border-white/[0.1] rounded-2xl px-8 py-5 text-sm font-black uppercase tracking-widest hover:bg-white/[0.1] active:scale-95 transition-all text-white/50 hover:text-mamy-green;
+    @apply bg-white/5 border border-white/10 rounded-2xl px-8 py-5 text-sm font-black uppercase tracking-widest hover:bg-white/10 active:scale-95 transition-all text-white/50 hover:text-mamy-green;
   }
 
   .text-gradient-gold {
