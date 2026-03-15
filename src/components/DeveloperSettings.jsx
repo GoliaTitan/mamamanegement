@@ -41,6 +41,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdatePIN, onSync,
 
   // Config State
   const [reportEmail, setReportEmail] = useState('');
+  const [products, setProducts] = useState([]);
 
   // Edit State
   const [editingUser, setEditingUser] = useState(null);
@@ -73,10 +74,12 @@ export default function DeveloperSettings({ user, onLogout, onUpdatePIN, onSync,
   const loadData = async () => {
     const allUsers = await db.users.toArray();
     const allStores = await db.stores.toArray();
+    const allProducts = await db.products.toArray();
     const emailConfig = await db.config.get('reportEmail');
     
     setUsers(allUsers);
     setStores(allStores);
+    setProducts(allProducts);
     if (emailConfig) setReportEmail(emailConfig.value);
   };
 

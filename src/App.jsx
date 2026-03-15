@@ -8,6 +8,7 @@ import OpeningCheckView from './components/OpeningCheckView';
 import DirectoryView from './components/DirectoryView';
 import InventoryView from './components/InventoryView';
 import ClosingSessionView from './components/ClosingSessionView';
+import DeveloperSettings from './components/DeveloperSettings';
 import { Bell, User, Search, MapPin, BookUser, Cloud, CloudOff, RefreshCw } from 'lucide-react';
 import { initLocalDB, db } from './lib/db';
 import { useSync } from './hooks/useSync';
