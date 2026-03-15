@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { db } from '../lib/db';
-import { supabase } from '../lib/supabase';
+import { supabase, isConfigured } from '../lib/supabase';
 
 export function useSync() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
@@ -14,12 +14,12 @@ export function useSync() {
     window.addEventListener('offline', handleOffline);
 
     // Initial sync and periodic sync every 5 minutes
-    if (isOnline) {
+    if (isOnline && isConfigured) {
       performFullSync();
     }
     
     const interval = setInterval(() => {
-      if (isOnline) performFullSync();
+      if (isOnline && isConfigured) performFullSync();
     }, 5 * 60 * 1000);
 
     return () => {

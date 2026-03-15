@@ -249,18 +249,30 @@ export default function App() {
         if (user.role === 'developer' || user.role === 'admin' || user.role === 'manager' || user.role === 'warehouse') {
           return <DeveloperSettings user={user} onUpdatePIN={handleUpdateDevPIN} onLogout={handleLogout} onSync={performFullSync} syncStatus={syncStatus} t={t} />;
         }
-        break;
+        setActivePage('pos');
+        return <POSView onAddToCart={addToCart} t={t} />;
       default:
+        console.warn('Unknown page, defaulting to POS');
         return (
-          <div className="flex-1 flex items-center justify-center">
-            <div className="glass-panel p-12 text-center">
-              <h1 className="text-4xl font-black mb-4 uppercase tracking-tighter">Coming Soon</h1>
-              <p className="text-white/40 font-medium">La sezione {activePage.toUpperCase()} è in fase di completamento.</p>
-            </div>
+          <div className="flex-1 flex overflow-hidden">
+            <POSView onAddToCart={addToCart} t={t} />
+            <Cart 
+              items={cart} 
+              onUpdateQty={updateCartQty} 
+              onRemove={removeFromCart}
+              onToggleOmaggio={toggleOmaggio}
+              manualDiscount={manualDiscount}
+              onSetDiscount={setManualDiscount}
+              onCheckout={handleCheckout}
+              user={user}
+              t={t}
+            />
           </div>
         );
     }
   };
+
+  console.log('Rendering App with user:', user?.name, 'page:', activePage);
 
   return (
     <div className="flex h-screen overflow-hidden text-white">
