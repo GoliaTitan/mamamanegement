@@ -16,6 +16,7 @@ import { translations } from './lib/translations';
 export default function App() {
   const { isOnline, syncStatus, performFullSync } = useSync();
   const [user, setUser] = useState(null);
+  const [initializing, setInitializing] = useState(true);
   
   const currentLang = user?.language || 'it';
   const t = (key) => translations[currentLang][key] || key;
@@ -79,6 +80,7 @@ export default function App() {
         setUser(parsedUser);
         checkDailyOpeningStatus(parsedUser);
       }
+      setInitializing(false);
     };
     
     initialize();
@@ -185,6 +187,20 @@ export default function App() {
   };
 
   // Auth Guard
+  if (initializing) {
+    return (
+      <div className="fixed inset-0 bg-mamy-dark flex flex-col items-center justify-center">
+        <div className="w-24 h-24 mb-6">
+          <img src="/logo_gold.png" alt="Logo" className="w-full h-full object-contain animate-pulse" />
+        </div>
+        <div className="flex items-center gap-3 text-mamy-green/60 uppercase font-black text-[10px] tracking-[0.3em]">
+          <RefreshCw size={16} className="animate-spin" />
+          Inizializzazione Sistema...
+        </div>
+      </div>
+    );
+  }
+
   if (!user) {
     return <LoginView onLogin={handleLogin} />;
   }

@@ -28,7 +28,11 @@ export const initLocalDB = async (initialProducts = []) => {
   // Stores Seed
   const sCount = await db.stores.count();
   if (sCount === 0) {
-    await db.stores.add({ id: 'roma_centro', name: 'Roma Centro', address: 'Via del Corso, 1' });
+    await db.stores.bulkAdd([
+      { id: 'roma_centro', name: 'MamaMary Roma Centro', address: 'Via del Corso, 1' },
+      { id: 'roma_trastevere', name: 'MamaMary Trastevere', address: 'Via della Lungaretta, 12' },
+      { id: 'roma_monti', name: 'MamaMary Monti', address: 'Via dei Serpenti, 5' }
+    ]);
   }
 
   // Developer Seed
