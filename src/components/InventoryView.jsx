@@ -8,16 +8,16 @@ export default function InventoryView({ t }) {
   const [loading, setLoading] = useState(true);
   const [status, setStatus] = useState('');
 
+  async function loadProducts() {
+    // setLoading(true);
+    const all = await db.products.toArray();
+    setProducts(all);
+    // setLoading(false);
+  }
+
   useEffect(() => {
     loadProducts();
   }, []);
-
-  const loadProducts = async () => {
-    setLoading(true);
-    const all = await db.products.toArray();
-    setProducts(all);
-    setLoading(false);
-  };
 
   const handleUpdateStock = async (id, delta) => {
     const product = await db.products.get(id);
@@ -69,7 +69,7 @@ export default function InventoryView({ t }) {
               placeholder="SEARCH ASSET ID..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-white/[0.03] border border-white/10 rounded-[1.8rem] py-5 pl-16 pr-6 outline-none focus:border-mamy-gold/40 focus:bg-white/[0.05] transition-all font-black text-sm uppercase tracking-tighter text-white relative z-10 backdrop-blur-md"
+              className="w-full bg-white/3 border border-white/10 rounded-[1.8rem] py-5 pl-16 pr-6 outline-none focus:border-mamy-gold/40 focus:bg-white/5 transition-all font-black text-sm uppercase tracking-tighter text-white relative z-10 backdrop-blur-md"
             />
           </div>
         </div>
@@ -78,8 +78,8 @@ export default function InventoryView({ t }) {
       <div className="flex-1 overflow-y-auto pr-4 no-scrollbar relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 pb-20">
           {filtered.map(p => (
-            <div key={p.id} className="glass-card p-8 flex flex-col sm:flex-row items-center gap-8 group hover:bg-white/[0.05] hover:border-white/20 transition-all duration-500 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-white/5 to-transparent rounded-bl-[4rem] pointer-events-none" />
+            <div key={p.id} className="glass-card p-8 flex flex-col sm:flex-row items-center gap-8 group hover:bg-white/5 hover:border-white/20 transition-all duration-500 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-white/5 to-transparent rounded-bl-[4rem] pointer-events-none" />
               
               <div className="w-32 h-32 rounded-3xl bg-white/5 p-5 shrink-0 relative group-hover:scale-110 transition-transform duration-700 border border-white/5">
                 <img src={p.image} alt={p.name} className="w-full h-full object-contain filter drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)]" />
@@ -108,12 +108,12 @@ export default function InventoryView({ t }) {
                     </div>
                   </div>
 
-                  <div className="h-10 w-[1px] bg-white/5 hidden sm:block" />
+                  <div className="h-10 w-px bg-white/5 hidden sm:block" />
 
                   <div className="flex items-center gap-2">
                     <button 
                       onClick={() => handleUpdateStock(p.id, -1)}
-                      className="w-12 h-12 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-white/40 hover:bg-white/10 hover:text-white hover:border-red-500/30 transition-all active:scale-90"
+                      className="w-12 h-12 rounded-2xl bg-white/3 border border-white/10 flex items-center justify-center text-white/40 hover:bg-white/10 hover:text-white hover:border-red-500/30 transition-all active:scale-90"
                     >
                       <Minus size={20} strokeWidth={3} />
                     </button>
@@ -125,7 +125,7 @@ export default function InventoryView({ t }) {
                     </button>
                     <button 
                       onClick={() => handleUpdateStock(p.id, 10)}
-                      className="px-5 h-12 rounded-2xl bg-white/[0.03] border border-white/10 flex items-center justify-center text-[11px] font-black text-white/30 hover:bg-white/10 hover:text-white hover:border-mamy-gold/30 transition-all active:scale-95 italic"
+                      className="px-5 h-12 rounded-2xl bg-white/3 border border-white/10 flex items-center justify-center text-[11px] font-black text-white/30 hover:bg-white/10 hover:text-white hover:border-mamy-gold/30 transition-all active:scale-95 italic"
                     >
                       +10
                     </button>

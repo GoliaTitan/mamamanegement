@@ -12,7 +12,7 @@ import {
   BookUser
 } from 'lucide-react';
 
-export default function Sidebar({ activePage, onNavigate, onLogout, user, t, isOpen, onClose }) {
+export default function Sidebar({ activePage, onNavigate, onLogout, user, t, isOpen, onClose, onRequestClose }) {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'pos', label: t('pos'), icon: ShoppingBag },
@@ -59,7 +59,7 @@ export default function Sidebar({ activePage, onNavigate, onLogout, user, t, isO
       )}
 
       <aside className={`
-        fixed inset-y-0 left-0 w-[300px] bg-white/[0.02] backdrop-blur-[50px] border-r border-white/10 p-8 z-100 transition-transform duration-700 lg:relative lg:translate-x-0
+        fixed inset-y-0 left-0 w-[300px] bg-white/2 backdrop-blur-[50px] border-r border-white/10 p-8 z-100 transition-transform duration-700 lg:relative lg:translate-x-0
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
       {/* Brand - Luxury Scale */}
@@ -89,10 +89,10 @@ export default function Sidebar({ activePage, onNavigate, onLogout, user, t, isO
             <button
               key={item.id}
               onClick={() => onNavigate(item.id)}
-              className={`w-full flex items-center gap-4 px-6 py-4 rounded-[1.5rem] transition-all duration-500 group relative overflow-hidden ${
+              className={`w-full flex items-center gap-4 px-6 py-4 rounded-3xl transition-all duration-500 group relative overflow-hidden ${
                 activePage === item.id 
                 ? 'bg-mamy-green/10 text-mamy-green border border-mamy-green/30 shadow-[0_10px_30px_rgba(57,211,83,0.1)]' 
-                : 'text-white/30 hover:bg-white/[0.03] hover:text-white border border-transparent'
+                : 'text-white/30 hover:bg-white/3 hover:text-white border border-transparent'
               }`}
             >
               <item.icon size={22} className={`${activePage === item.id ? 'text-mamy-green' : 'group-hover:scale-110 group-hover:text-mamy-green'} transition-all duration-500`} />
@@ -119,7 +119,7 @@ export default function Sidebar({ activePage, onNavigate, onLogout, user, t, isO
         </button>
         <button 
           onClick={onLogout}
-          className="w-full flex items-center gap-4 px-4 py-3 text-white/[0.15] hover:text-red-500 transition-all text-[9px] uppercase font-black tracking-[0.2em] italic"
+          className="w-full flex items-center gap-4 px-4 py-3 text-white/15 hover:text-red-500 transition-all text-[9px] uppercase font-black tracking-[0.2em] italic"
         >
           <LogOut size={14} />
           <span>{t('esc_console')}</span>

@@ -56,11 +56,11 @@ export default function DirectoryView({ t }) {
               placeholder="SEARCH STAFF..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full bg-white/[0.03] border border-white/10 rounded-[1.8rem] py-5 pl-16 pr-6 outline-none focus:border-indigo-400/40 focus:bg-white/[0.05] transition-all font-black text-sm uppercase tracking-tighter text-white relative z-10 backdrop-blur-md"
+              className="w-full bg-white/3 border border-white/10 rounded-3xl py-5 pl-16 pr-6 outline-none focus:border-indigo-400/40 focus:bg-white/5 transition-all font-black text-sm uppercase tracking-tighter text-white relative z-10 backdrop-blur-md"
             />
           </div>
 
-          <div className="flex bg-white/[0.03] p-1.5 rounded-2xl border border-white/10 shadow-inner backdrop-blur-md relative z-10">
+          <div className="flex bg-white/3 p-1.5 rounded-2xl border border-white/10 shadow-inner backdrop-blur-md relative z-10">
             <button 
               onClick={() => setViewMode('grid')}
               className={`w-12 h-12 flex items-center justify-center rounded-xl transition-all duration-500 ${viewMode === 'grid' ? 'bg-indigo-500 text-white shadow-lg shadow-indigo-500/20' : 'text-white/20 hover:text-white/40'}`}
@@ -84,14 +84,16 @@ export default function DirectoryView({ t }) {
             {filteredUsers.map(u => (
               <div 
                 key={u.email} 
-                className="group glass-card p-8 border border-white/5 hover:border-indigo-500/30 transition-all duration-700 hover:bg-white/[0.05] overflow-hidden relative"
+                className="group glass-card p-8 border border-white/5 hover:border-indigo-500/30 transition-all duration-700 hover:bg-white/5
+ overflow-hidden relative"
               >
                 <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-indigo-500/5 to-transparent rounded-bl-[4rem] pointer-events-none" />
                 
                 {/* Profile Header */}
                 <div className="flex items-start justify-between mb-10">
                   <div className="relative group-hover:scale-105 transition-transform duration-700">
-                    <div className="w-24 h-24 rounded-[2rem] bg-indigo-500/10 flex items-center justify-center text-4xl font-black text-indigo-400 border border-indigo-400/20 shadow-2xl overflow-hidden relative">
+                    <div className="w-24 h-24 rounded-4xl
+ bg-indigo-500/10 flex items-center justify-center text-4xl font-black text-indigo-400 border border-indigo-400/20 shadow-2xl overflow-hidden relative">
                       <div className="absolute inset-0 bg-linear-to-br from-white/10 to-transparent" />
                       {u.photo ? (
                         <img src={u.photo} alt={u.name} className="w-full h-full object-cover relative z-10" />
@@ -124,7 +126,7 @@ export default function DirectoryView({ t }) {
                   <div className="h-px bg-white/5 w-full" />
 
                   <div className="grid grid-cols-1 gap-3">
-                    <a href={`mailto:${u.email}`} className="flex items-center gap-4 text-white/30 hover:text-white transition-all group/link bg-white/[0.02] p-4 rounded-2xl border border-white/5 hover:border-indigo-500/30">
+                    <a href={`mailto:${u.email}`} className="flex items-center gap-4 text-white/30 hover:text-white transition-all group/link bg-white/2 p-4 rounded-2xl border border-white/5 hover:border-indigo-500/30">
                       <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover/link:bg-indigo-500/20 group-hover/link:text-indigo-400 transition-all shrink-0">
                         <Mail size={16} />
                       </div>
@@ -133,7 +135,7 @@ export default function DirectoryView({ t }) {
                         <span className="text-xs font-bold truncate">{u.email}</span>
                       </div>
                     </a>
-                    <a href={`tel:${u.phone}`} className="flex items-center gap-4 text-white/30 hover:text-white transition-all group/link bg-white/[0.02] p-4 rounded-2xl border border-white/5 hover:border-indigo-500/30">
+                    <a href={`tel:${u.phone}`} className="flex items-center gap-4 text-white/30 hover:text-white transition-all group/link bg-white/2 p-4 rounded-2xl border border-white/5 hover:border-indigo-500/30">
                       <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center group-hover/link:bg-indigo-500/20 group-hover/link:text-indigo-400 transition-all shrink-0">
                         <Phone size={16} />
                       </div>
@@ -152,7 +154,7 @@ export default function DirectoryView({ t }) {
             <div className="absolute inset-x-0 top-0 h-32 bg-linear-to-b from-indigo-500/5 to-transparent pointer-events-none" />
             <table className="w-full text-left border-collapse relative z-10">
               <thead>
-                <tr className="border-b border-white/10 bg-white/[0.02] backdrop-blur-xl">
+                <tr className="border-b border-white/10 bg-white/2 backdrop-blur-xl">
                   <th className="px-10 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20 italic">{t('staff')}</th>
                   <th className="px-10 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20 italic">Professional Role</th>
                   <th className="px-10 py-6 text-[10px] font-black uppercase tracking-[0.3em] text-white/20 italic">Location</th>
@@ -161,7 +163,8 @@ export default function DirectoryView({ t }) {
               </thead>
               <tbody className="divide-y divide-white/5">
                 {filteredUsers.map(u => (
-                  <tr key={u.email} className="hover:bg-white/[0.03] transition-all duration-500 group">
+                  <tr key={u.email} className="hover:bg-white/3
+ transition-all duration-500 group">
                     <td className="px-10 py-6">
                       <div className="flex items-center gap-6">
                         <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center text-lg font-black text-indigo-400 border border-indigo-400/20 overflow-hidden relative">
@@ -191,10 +194,10 @@ export default function DirectoryView({ t }) {
                     </td>
                     <td className="px-10 py-6">
                       <div className="flex items-center justify-end gap-3">
-                        <a href={`mailto:${u.email}`} className="w-12 h-12 flex items-center justify-center bg-white/[0.03] border border-white/5 rounded-2xl text-white/20 hover:text-indigo-400 hover:bg-indigo-400/10 hover:border-indigo-400/30 transition-all" title={u.email}>
+                        <a href={`mailto:${u.email}`} className="w-12 h-12 flex items-center justify-center bg-white/3 border border-white/5 rounded-2xl text-white/20 hover:text-indigo-400 hover:bg-indigo-400/10 hover:border-indigo-400/30 transition-all" title={u.email}>
                           <Mail size={18} />
                         </a>
-                        <a href={`tel:${u.phone}`} className="w-12 h-12 flex items-center justify-center bg-white/[0.03] border border-white/5 rounded-2xl text-white/20 hover:text-indigo-400 hover:bg-indigo-400/10 hover:border-indigo-400/30 transition-all" title={u.phone}>
+                        <a href={`tel:${u.phone}`} className="w-12 h-12 flex items-center justify-center bg-white/3 border border-white/5 rounded-2xl text-white/20 hover:text-indigo-400 hover:bg-indigo-400/10 hover:border-indigo-400/30 transition-all" title={u.phone}>
                           <Phone size={18} />
                         </a>
                       </div>
@@ -208,7 +211,7 @@ export default function DirectoryView({ t }) {
 
         {filteredUsers.length === 0 && (
           <div className="flex flex-col items-center justify-center py-40 text-center animate-in fade-in zoom-in duration-700">
-            <div className="w-32 h-32 bg-white/[0.02] rounded-[2.5rem] flex items-center justify-center text-white/5 mb-10 border border-white/5 shadow-inner">
+            <div className="w-32 h-32 bg-white/2 rounded-[2.5rem] flex items-center justify-center text-white/5 mb-10 border border-white/5 shadow-inner">
               <Search size={48} strokeWidth={1} />
             </div>
             <h3 className="text-2xl font-black text-white/20 uppercase tracking-[0.4em] italic">{t('no_results')}</h3>

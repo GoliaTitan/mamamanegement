@@ -16,7 +16,7 @@ export default function ClosingSessionView({ user, onLogout, t }) {
     if (savedFund) setOpeningFund(parseFloat(savedFund));
   }, []);
 
-  const loadEndOfDayReport = async () => {
+  async function loadEndOfDayReport() {
     const today = new Date().toISOString().split('T')[0];
     const dailySales = await db.sales
       .where('timestamp')
@@ -31,7 +31,7 @@ export default function ClosingSessionView({ user, onLogout, t }) {
     }), { gross: 0, discount: 0, net: 0, count: 0 });
 
     setSalesData(totals);
-  };
+  }
 
   const handleCapturePhoto = (e) => {
     const file = e.target.files[0];

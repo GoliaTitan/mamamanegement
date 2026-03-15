@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Html5QrcodeScanner } from 'html5-qrcode';
 import { X } from 'lucide-react';
 
@@ -20,7 +20,7 @@ export default function Scanner({ onScan, onClose }) {
         scanner.clear();
         onClose();
       },
-      (error) => {
+      () => {
         // Ignored as it scans continuously
       }
     );
@@ -33,7 +33,7 @@ export default function Scanner({ onScan, onClose }) {
   }, [onScan, onClose]);
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-6 sm:p-12">
+    <div className="fixed inset-0 z-100 flex items-center justify-center p-6 sm:p-12">
       {/* Backdrop */}
       <div 
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
@@ -42,7 +42,7 @@ export default function Scanner({ onScan, onClose }) {
       
       {/* Modal */}
       <div className="relative w-full max-w-lg glass-panel overflow-hidden flex flex-col animate-in fade-in zoom-in duration-300">
-        <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-white/[0.02]">
+        <div className="px-6 py-4 border-b border-white/10 flex items-center justify-between bg-white/2">
           <h3 className="text-lg font-bold tracking-tight">Scansiona Barcode</h3>
           <button 
             onClick={onClose}

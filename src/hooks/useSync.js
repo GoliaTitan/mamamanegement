@@ -29,7 +29,7 @@ export function useSync() {
     };
   }, [isOnline]);
 
-  const performFullSync = async () => {
+  async function performFullSync() {
     setSyncStatus('syncing');
     try {
       await Promise.all([
@@ -44,7 +44,7 @@ export function useSync() {
       console.error('Sync Error:', error);
       setSyncStatus('error');
     }
-  };
+  }
 
   const pushProductUpdates = async () => {
     const products = await db.products.toArray();

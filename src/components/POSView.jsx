@@ -66,12 +66,12 @@ export default function POSView({ onAddToCart, t }) {
                 placeholder={t('search_product')} 
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full bg-white/[0.03] border border-white/10 rounded-[2rem] pl-16 pr-8 py-5 text-lg outline-none focus:border-mamy-green/40 focus:bg-white/[0.05] transition-all font-medium placeholder:text-white/10"
+                className="w-full bg-white/3 border border-white/10 rounded-4xl pl-16 pr-8 py-5 text-lg outline-none focus:border-mamy-green/40 focus:bg-white/5 transition-all font-medium placeholder:text-white/10"
               />
             </div>
             <button 
               onClick={() => setShowScanner(true)}
-              className="shrink-0 w-[68px] h-[68px] flex items-center justify-center bg-white/[0.03] border border-white/10 rounded-[1.8rem] text-white/30 hover:text-white hover:bg-white/10 active:scale-95 transition-all shadow-2xl glass-panel"
+              className="shrink-0 w-[68px] h-[68px] flex items-center justify-center bg-white/3 border border-white/10 rounded-[1.8rem] text-white/30 hover:text-white hover:bg-white/10 active:scale-95 transition-all shadow-2xl glass-panel"
             >
               <Camera size={26} />
             </button>
@@ -86,7 +86,7 @@ export default function POSView({ onAddToCart, t }) {
                 className={`shrink-0 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] italic border transition-all duration-500 ${
                   activeCategory === cat
                   ? 'bg-mamy-green text-black border-mamy-green shadow-[0_10px_25px_rgba(57,211,83,0.3)]'
-                  : 'bg-white/[0.03] text-white/40 border-white/5 hover:text-white hover:bg-white/10'
+                  : 'bg-white/3 text-white/40 border-white/5 hover:text-white hover:bg-white/10'
                 }`}
               >
                 {cat}
@@ -111,7 +111,7 @@ export default function POSView({ onAddToCart, t }) {
                   onClick={() => handleAddToCart(p)}
                   className="shrink-0 flex items-center gap-5 p-5 glass-card group active:scale-[0.98] w-72"
                 >
-                  <div className="w-16 h-16 rounded-2xl bg-white/[0.05] p-2 shrink-0 group-hover:bg-white/10 transition-colors border border-white/5">
+                  <div className="w-16 h-16 rounded-2xl bg-white/5 p-2 shrink-0 group-hover:bg-white/10 transition-colors border border-white/5">
                     <img src={p.image} alt={p.name} className="w-full h-full object-contain drop-shadow-lg" />
                   </div>
                   <div className="flex flex-col items-start truncate overflow-hidden">
@@ -132,7 +132,7 @@ export default function POSView({ onAddToCart, t }) {
           {filteredProducts.map((product) => (
             <div key={product.id} className="glass-card group flex flex-col">
               {/* Product Image Area - Refined background */}
-              <div className="h-72 relative bg-gradient-to-br from-white/[0.05] to-transparent flex items-center justify-center p-8 rounded-t-[2rem] overflow-hidden">
+              <div className="h-72 relative bg-linear-to-br from-white/5 to-transparent flex items-center justify-center p-8 rounded-t-4xl overflow-hidden">
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.05),transparent_70%)]" />
                 
                 {product.image ? (
@@ -183,7 +183,7 @@ export default function POSView({ onAddToCart, t }) {
                   
                   <button 
                     onClick={() => handleAddToCart(product)}
-                    className="w-16 h-16 flex items-center justify-center bg-white/[0.03] border border-white/10 rounded-[1.5rem] text-mamy-green hover:bg-mamy-green hover:text-black hover:scale-105 transition-all duration-500 shadow-2xl active:scale-90"
+                    className="w-16 h-16 flex items-center justify-center bg-white/3 border border-white/10 rounded-3xl text-mamy-green hover:bg-mamy-green hover:text-black hover:scale-105 transition-all duration-500 shadow-2xl active:scale-90"
                   >
                     <Plus size={24} strokeWidth={3} />
                   </button>

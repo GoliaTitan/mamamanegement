@@ -52,39 +52,50 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
   const [sales, setSales] = useState([]);
   const [reportTotals, setReportTotals] = useState({ gross: 0, discount: 0, net: 0 });
 
-  useEffect(() => {
-    loadData();
-    if (activeTab === 'reports') {
-      loadSalesReports();
-    }
-  }, [user, activeTab]);
-
-  const loadSalesReports = async () => {
+  async function loadSalesReports() {
     const today = new Date().toISOString().split('T')[0];
     const allSales = await db.sales.orderBy('timestamp').reverse().toArray();
     setSales(allSales);
 
-    const todaySales = allSales.filter(s => s.timestamp.startsWith(today));
-    const totals = todaySales.reduce((acc, s) => ({
-      gross: acc.gross + (s.totalGross || 0),
-      discount: acc.discount + (s.totalDiscount || 0),
-      net: acc.net + (s.totalNet || 0)
-    }), { gross: 0, discount: 0, net: 0 });
-    
-    setReportTotals(totals);
-  };
+    // Comprehensive Report Stats
+    const totals = allSales.reduce((acc, s) => {
+      acc.gross += s.totalGross || 0;
+      acc.discount += s.totalDiscount || 0;
+      acc.net += s.totalNet || 0;
+      if (s.timestamp.startsWith(today)) {
+        acc.today += s.totalNet || 0;
+      }
+      return acc;
+    }, { gross: 0, discount: 0, net: 0, today: 0 });
 
-  const loadData = async () => {
+    setReportTotals(totals);
+  }
+
+  async function loadProducts() {
+    // setLoading(true);
+    const all = await db.products.toArray();
+    setProducts(all);
+    // setLoading(false);
+  }
+
+  async function loadData() {
     const allUsers = await db.users.toArray();
     const allStores = await db.stores.toArray();
-    const allProducts = await db.products.toArray();
+    // Products are now loaded by loadProducts()
     const emailConfig = await db.config.get('reportEmail');
-    
+
     setUsers(allUsers);
     setStores(allStores);
-    setProducts(allProducts);
     if (emailConfig) setReportEmail(emailConfig.value);
-  };
+  }
+
+  useEffect(() => {
+    loadData();
+    loadProducts(); // Call loadProducts here
+    if (activeTab === 'reports') {
+      loadSalesReports();
+    }
+  }, [user, activeTab]);
 
   const handleUpdateProfile = async () => {
     try {
@@ -213,7 +224,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
         category: newCategory,
         needsSync: true
       });
-      loadData();
+      loadProducts(); // Refresh products after update
     } catch {
       alert('Errore durante l\'aggiornamento della categoria');
     }
@@ -226,7 +237,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
         sale_price: parseFloat(salePrice) || 0,
         needsSync: true
       });
-      loadData();
+      loadProducts(); // Refresh products after update
     } catch {
       alert('Errore durante l\'aggiornamento dell\'offerta');
     }
@@ -238,7 +249,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
         is_best_seller: !currentStatus,
         needsSync: true
       });
-      loadData();
+      loadProducts(); // Refresh products after update
     } catch {
       alert('Errore during best seller update');
     }
@@ -254,7 +265,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
             image: reader.result,
             needsSync: true 
           });
-          loadData();
+          loadProducts(); // Refresh products after update
         } catch {
           alert('Errore caricamento foto prodotto');
         }
@@ -275,7 +286,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
   return (
     <div className="flex-1 flex flex-col h-full overflow-hidden">
       {/* Settings Navigation */}
-      <div className="flex items-center gap-3 px-8 py-8 border-b border-white/5 bg-white/[0.02] backdrop-blur-3xl relative z-20">
+      <div className="flex items-center gap-3 px-8 py-8 border-b border-white/5 bg-white/2 backdrop-blur-3xl relative z-20">
         <div className="absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-mamy-gold/20 to-transparent" />
         {tabs.map(tab => (
           <button
@@ -339,7 +350,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                 <div className="flex flex-col gap-3">
                   <button 
                     onClick={handleUpdateProfile}
-                    className="px-8 py-4 bg-white/[0.03] border border-white/10 rounded-2xl text-white/60 text-xs font-black uppercase tracking-widest hover:bg-white/10 hover:text-white hover:border-mamy-green/40 transition-all flex items-center gap-3 group/save"
+                    className="px-8 py-4 bg-white/3 border border-white/10 rounded-2xl text-white/60 text-xs font-black uppercase tracking-widest hover:bg-white/10 hover:text-white hover:border-mamy-green/40 transition-all flex items-center gap-3 group/save"
                   >
                     <Save size={18} className="group-hover/save:scale-110 transition-transform" />
                     Save Profile
@@ -371,7 +382,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                           placeholder="+39 333 1234567"
                           value={phone}
                           onChange={e => setPhone(e.target.value)}
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-5 pl-14 pr-6 text-sm outline-none focus:border-mamy-green/40 focus:bg-white/[0.05] transition-all font-black text-white uppercase tracking-tighter"
+                          className="w-full bg-white/3 border border-white/10 rounded-2xl py-5 pl-14 pr-6 text-sm outline-none focus:border-mamy-green/40 focus:bg-white/5 transition-all font-black text-white uppercase tracking-tighter"
                         />
                       </div>
                     </div>
@@ -382,7 +393,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                         <select 
                           value={language}
                           onChange={e => setLanguage(e.target.value)}
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-5 px-6 text-sm outline-none focus:border-mamy-green/40 focus:bg-white/[0.05] transition-all font-black text-white uppercase tracking-tighter appearance-none cursor-pointer"
+                          className="w-full bg-white/3 border border-white/10 rounded-2xl py-5 px-6 text-sm outline-none focus:border-mamy-green/40 focus:bg-white/5 transition-all font-black text-white uppercase tracking-tighter appearance-none cursor-pointer"
                         >
                           <option value="it" className="bg-mamy-dark">Italiano Core 🇮🇹</option>
                           <option value="en" className="bg-mamy-dark">English Global 🇬🇧</option>
@@ -395,7 +406,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                   </div>
                 </div>
 
-                <div className="space-y-8 p-8 rounded-3xl bg-mamy-green/[0.02] border border-mamy-green/5 relative overflow-hidden">
+                <div className="space-y-8 p-8 rounded-3xl bg-mamy-green/20 border border-mamy-green/5 relative overflow-hidden">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-mamy-green/5 to-transparent pointer-events-none" />
                   
                   <div className="flex items-center gap-5 relative z-10">
@@ -476,7 +487,8 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
 
                 <div className="grid grid-cols-1 gap-6 relative z-10">
                   {products.map(p => (
-                    <div key={p.id} className="grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 rounded-3xl bg-white/[0.02] border border-white/5 hover:border-emerald-400/30 transition-all duration-700 hover:bg-white/[0.04] group/item">
+                    <div key={p.id} className="grid grid-cols-1 lg:grid-cols-12 items-center gap-8 p-6 rounded-3xl bg-white/2 border border-white/5 hover:border-emerald-400/30 transition-all duration-700 hover:bg-white/4
+ group/item">
                       <div className="lg:col-span-1 flex justify-center">
                         <label className="relative group/photo cursor-pointer shrink-0">
                           <div className="w-20 h-20 rounded-2xl bg-white/5 p-3 border border-white/10 group-hover/item:border-emerald-400/40 group-hover/item:rotate-3 transition-all duration-700 overflow-hidden relative">
@@ -510,7 +522,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                       <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-6 items-center">
                         <div className="relative">
                           <select 
-                            className="w-full bg-white/[0.03] border border-white/10 rounded-2xl py-4 px-5 text-[10px] font-black uppercase text-white outline-none focus:border-emerald-400/40 transition-all appearance-none cursor-pointer"
+                            className="w-full bg-white/3 border border-white/10 rounded-2xl py-4 px-5 text-[10px] font-black uppercase text-white outline-none focus:border-emerald-400/40 transition-all appearance-none cursor-pointer"
                             value={p.category}
                             onChange={(e) => handleUpdateProductCategory(p.id, e.target.value)}
                           >
@@ -582,7 +594,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                         placeholder="OPERATIVE NAME"
                         value={newUser.name}
                         onChange={e => setNewUser({...newUser, name: e.target.value})}
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 text-sm outline-none focus:border-blue-400/40 focus:bg-white/[0.05] transition-all font-black text-white uppercase tracking-tighter"
+                        className="w-full bg-white/3 border border-white/10 rounded-2xl px-6 py-5 text-sm outline-none focus:border-blue-400/40 focus:bg-white/5 transition-all font-black text-white uppercase tracking-tighter"
                       />
                     </div>
                     <div className="space-y-2">
@@ -592,7 +604,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                         placeholder="CORPORATE EMAIL"
                         value={newUser.email}
                         onChange={e => setNewUser({...newUser, email: e.target.value})}
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 text-sm outline-none focus:border-blue-400/40 focus:bg-white/[0.05] transition-all font-black text-white uppercase tracking-tighter"
+                        className="w-full bg-white/3 border border-white/10 rounded-2xl px-6 py-5 text-sm outline-none focus:border-blue-400/40 focus:bg-white/5 transition-all font-black text-white uppercase tracking-tighter"
                       />
                     </div>
                     
@@ -605,7 +617,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                           maxLength={6}
                           value={newUser.pin}
                           onChange={e => setNewUser({...newUser, pin: e.target.value.replace(/\D/g, '')})}
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 text-center text-lg tracking-[0.5em] outline-none focus:border-blue-400/40 focus:bg-white/[0.05] transition-all font-black text-white"
+                          className="w-full bg-white/3 border border-white/10 rounded-2xl px-6 py-5 text-center text-lg tracking-[0.5em] outline-none focus:border-blue-400/40 focus:bg-white/5 transition-all font-black text-white"
                         />
                       </div>
                       <div className="space-y-2">
@@ -613,7 +625,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                          <select 
                           value={newUser.role}
                           onChange={e => setNewUser({...newUser, role: e.target.value})}
-                          className="w-full bg-white/[0.03] border border-white/10 rounded-2xl px-6 py-5 text-sm outline-none focus:border-blue-400/40 focus:bg-white/[0.05] transition-all font-black text-white uppercase tracking-tighter appearance-none cursor-pointer"
+                          className="w-full bg-white/3 border border-white/10 rounded-2xl px-6 py-5 text-sm outline-none focus:border-blue-400/40 focus:bg-white/5 transition-all font-black text-white uppercase tracking-tighter appearance-none cursor-pointer"
                         >
                           <option value="cashier" className="bg-mamy-dark italic">Field Cashier</option>
                           <option value="warehouse" className="bg-mamy-dark italic">Logistics Ops</option>
@@ -655,7 +667,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
                     {users.map(u => (
-                      <div key={u.email} className={`group/item relative flex flex-col p-6 rounded-3xl bg-white/[0.02] border transition-all duration-700 hover:bg-white/[0.05] hover:scale-[1.02] ${editingUser?.email === u.email ? 'border-blue-400/40 bg-white/5' : 'border-white/5 hover:border-blue-400/20'}`}>
+                      <div key={u.email} className={`group/item relative flex flex-col p-6 rounded-3xl bg-white/2 border transition-all duration-700 hover:bg-white/5 hover:scale-[1.02] ${editingUser?.email === u.email ? 'border-blue-400/40 bg-white/5' : 'border-white/5 hover:border-blue-400/20'}`}>
                         <div className="flex items-center justify-between mb-6">
                           <div className="flex items-center gap-5">
                             <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-base font-black shadow-2xl overflow-hidden relative duration-700 group-hover/item:rotate-3 ${u.role === 'developer' ? 'bg-mamy-green text-black ring-4 ring-mamy-green/10' : 'bg-white/5 text-white/20 border border-white/10'}`}>
@@ -730,7 +742,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                           </div>
                         )}
                         
-                        <div className="absolute bottom-0 right-0 w-16 h-16 bg-linear-to-br from-blue-500/[0.03] to-transparent rounded-tl-full pointer-events-none" />
+                        <div className="absolute bottom-0 right-0 w-16 h-16 bg-linear-to-br from-blue-500/30 to-transparent rounded-tl-full pointer-events-none" />
                       </div>
                     ))}
                   </div>
@@ -805,7 +817,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                   
                   <div className="flex items-center justify-between mb-12 relative z-10">
                     <div className="flex items-center gap-5">
-                      <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-400/20">
+                      <div className="w-14 h-14 bg-purple-500/10 rounded-2xl flex items-center justify-center text-purple-400 border border-purple-400/20 shadow-2xl">
                         <LayoutDashboard size={24} />
                       </div>
                       <div>
@@ -895,9 +907,9 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                         <th className="py-6 text-[10px] font-black text-white/20 uppercase tracking-widest px-4 text-right">Net Liquidity</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-white/[0.02]">
+                    <tbody className="divide-y divide-white/20">
                       {sales.map(sale => (
-                        <tr key={sale.id} className="group/row hover:bg-white/[0.02] transition-colors">
+                        <tr key={sale.id} className="group/row hover:bg-white/20 transition-colors">
                           <td className="py-6 px-4">
                             <div className="flex flex-col">
                               <span className="text-xs font-black text-white uppercase italic">{new Date(sale.timestamp).toLocaleDateString()}</span>
@@ -957,7 +969,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                         placeholder="admin@mamamary.io"
                         value={reportEmail}
                         onChange={e => setReportEmail(e.target.value)}
-                        className="w-full bg-white/[0.03] border border-white/10 rounded-2xl pl-16 pr-6 py-6 text-sm outline-none focus:border-red-500/40 focus:bg-white/[0.05] transition-all font-black text-white uppercase tracking-tighter"
+                        className="w-full bg-white/3 border border-white/10 rounded-2xl pl-16 pr-6 py-6 text-sm outline-none focus:border-red-500/40 focus:bg-white/5 transition-all font-black text-white uppercase tracking-tighter"
                       />
                     </div>
                     <p className="text-[9px] text-white/20 font-black uppercase tracking-widest italic ml-2">
@@ -986,7 +998,7 @@ export default function DeveloperSettings({ user, onLogout, onUpdateUser, onSync
                     <button 
                       onClick={onSync}
                       disabled={syncStatus === 'syncing'}
-                      className="w-full py-6 bg-white/[0.03] border border-white/10 rounded-3xl text-white/40 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-white/[0.07] hover:text-white hover:border-indigo-400/40 transition-all flex items-center justify-center gap-4 disabled:opacity-50 group/sync"
+                      className="w-full py-6 bg-white/3 border border-white/10 rounded-3xl text-white/40 text-[10px] font-black uppercase tracking-[0.3em] hover:bg-white/7 hover:text-white hover:border-indigo-400/40 transition-all flex items-center justify-center gap-4 disabled:opacity-50 group/sync"
                     >
                       <RefreshCw size={24} className={`${syncStatus === 'syncing' ? 'animate-spin' : 'group-hover/sync:rotate-180 transition-transform duration-1000'}`} />
                       Execute Global Database Sync

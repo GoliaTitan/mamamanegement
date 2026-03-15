@@ -78,14 +78,9 @@ export default function OpeningCheckView({ user, store, onComplete, t }) {
         status: 'pending'
       };
 
-      // In una vera implementazione qui chiameremmo un'API o una funzione Supabase
-      // per inviare l'email con le foto (che sono in base64 in data.photos).
       console.log('Sending report to:', targetEmail, report);
       
-      // Salviamo il check nel database locale
       await db.daily_checks.add(report);
-
-      // Simuliamo un delay di invio
       await new Promise(resolve => setTimeout(resolve, 1500));
       
       onComplete();
@@ -97,13 +92,11 @@ export default function OpeningCheckView({ user, store, onComplete, t }) {
   };
 
   const currentItem = checklistItems[step - 1];
-  const isLastStep = step === checklistItems.length;
 
   return (
     <div className="fixed inset-0 z-100 bg-mamy-dark/95 backdrop-blur-3xl flex items-center justify-center p-4">
       <div className="w-full max-w-xl animate-in zoom-in-95 duration-500">
         
-        {/* Header UI */}
         <div className="mb-8 text-center">
           <div className="w-20 h-20 bg-mamy-green/10 rounded-3xl flex items-center justify-center text-mamy-green mx-auto mb-4 border border-mamy-green/20 shadow-lg shadow-mamy-green/5">
             <ClipboardCheck size={40} />
@@ -112,7 +105,6 @@ export default function OpeningCheckView({ user, store, onComplete, t }) {
           <p className="text-white/30 text-[10px] uppercase font-black tracking-[0.3em] mt-2">Protocollo di eccellenza MamaMary</p>
         </div>
 
-        {/* Info Cards */}
         <div className="grid grid-cols-3 gap-3 mb-8">
           <div className="bg-white/5 border border-white/10 rounded-2xl p-4 flex flex-col items-center gap-1">
             <User size={14} className="text-white/30" />
@@ -128,10 +120,8 @@ export default function OpeningCheckView({ user, store, onComplete, t }) {
           </div>
         </div>
 
-        {/* Steps Content */}
         {step <= 3 ? (
           <div className="glass-panel p-8 space-y-8 relative overflow-hidden">
-            {/* Progress Bar */}
             <div className="absolute top-0 left-0 right-0 h-1 bg-white/5">
               <div 
                 className="h-full bg-mamy-green transition-all duration-500"
@@ -265,7 +255,6 @@ export default function OpeningCheckView({ user, store, onComplete, t }) {
           </div>
         )}
 
-        {/* Footer Progress dots for steps 1-3 */}
         {step <= 3 && (
           <div className="mt-8 flex justify-center gap-2">
             {[1, 2, 3].map(i => (

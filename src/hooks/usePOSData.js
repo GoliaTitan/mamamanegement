@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { db, initLocalDB } from '../lib/db';
-import { supabase } from '../lib/supabase';
 import initialProducts from '../data/scraped_products.json';
 
 export function usePOSData() {

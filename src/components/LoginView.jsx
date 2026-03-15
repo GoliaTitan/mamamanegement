@@ -60,7 +60,7 @@ export default function LoginView({ onLogin }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[200] bg-mamy-dark flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div className="fixed inset-0 z-200 bg-mamy-dark flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
       <div className="blur-overlay w-[600px] h-[600px] bg-mamy-green top-[-200px] left-[-200px] opacity-10" />
       
       <div className="w-full max-w-sm flex flex-col items-center py-8">

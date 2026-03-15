@@ -9,7 +9,7 @@ import DirectoryView from './components/DirectoryView';
 import InventoryView from './components/InventoryView';
 import ClosingSessionView from './components/ClosingSessionView';
 import DeveloperSettings from './components/DeveloperSettings';
-import { Bell, User, Search, MapPin, BookUser, Cloud, CloudOff, RefreshCw, ShoppingBag } from 'lucide-react';
+import { Bell, User, MapPin, BookUser, Cloud, CloudOff, RefreshCw, ShoppingBag, ShoppingCart } from 'lucide-react';
 import { initLocalDB, db } from './lib/db';
 import { useSync } from './hooks/useSync';
 import { translations } from './lib/translations';
@@ -75,6 +75,33 @@ export default function App() {
     });
   };
 
+  async function resolveStore() {
+    if (user?.storeId) {
+      const store = await db.stores.get(user.storeId);
+      setCurrentStore(store || { id: user.storeId, name: 'Sede Sconosciuta' });
+    } else if (user?.store) {
+      setCurrentStore(user.store);
+    }
+  }
+
+  async function checkDailyOpeningStatus(userData) {
+    if (userData.role !== 'cashier' && userData.role !== 'manager') return;
+    
+    const today = new Date().toISOString().split('T')[0];
+    const storeId = userData.storeId || userData.store?.id || 'roma_centro';
+    
+    const existingCheck = await db.daily_checks.where({
+      date: today,
+      userId: userData.email,
+      storeId: storeId,
+      type: 'opening_check'
+    }).first();
+
+    if (!existingCheck) {
+      setShowOpeningCheck(true);
+    }
+  }
+
   useEffect(() => {
     const initialize = async () => {
       await initLocalDB([]); 
@@ -96,37 +123,11 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const resolveStore = async () => {
-      if (user?.storeId) {
-        const store = await db.stores.get(user.storeId);
-        setCurrentStore(store || { id: user.storeId, name: 'Sede Sconosciuta' });
-      } else if (user?.store) {
-        // Fallback for legacy sessions
-        setCurrentStore(user.store);
-      }
-    };
     resolveStore();
   }, [user?.storeId, user?.store]);
 
-  const checkDailyOpeningStatus = async (userData) => {
-    if (userData.role !== 'cashier' && userData.role !== 'manager') return;
-    
-    const today = new Date().toISOString().split('T')[0];
-    const storeId = userData.storeId || userData.store?.id || 'roma_centro';
-    
-    const existingCheck = await db.daily_checks.where({
-      date: today,
-      userId: userData.email,
-      storeId: storeId,
-      type: 'opening_check'
-    }).first();
 
-    if (!existingCheck) {
-      setShowOpeningCheck(true);
-    }
-  };
-
-  const handleCheckout = async (paymentMethod = 'cash') => {
+  async function handleCheckout(paymentMethod = 'cash') {
     if (cart.length === 0) return;
 
     const subtotal = cart.reduce((acc, item) => acc + (item.currentPrice * item.qty), 0);
@@ -336,12 +337,12 @@ export default function App() {
       <main className="flex-1 flex flex-col min-w-0 h-full relative z-10 transition-all duration-300">
         {/* Header matching mockup */}
         <header className="h-[100px] md:h-[120px] flex items-center justify-between px-8 md:px-12 relative overflow-hidden backdrop-blur-md border-b border-white/10">
-          <div className="absolute inset-0 bg-gradient-to-r from-mamy-green/5 via-transparent to-mamy-gold/5" />
+          <div className="absolute inset-0 bg-linear-to-r from-mamy-green/5 via-transparent to-mamy-gold/5" />
           
           <div className="flex items-center gap-6 relative z-10">
             <button 
               onClick={toggleMobileMenu}
-              className="lg:hidden w-14 h-14 flex flex-col items-center justify-center bg-white/[0.03] rounded-2xl border border-white/10 text-white/40 active:scale-95 transition-all"
+              className="lg:hidden w-14 h-14 flex flex-col items-center justify-center bg-white/3 rounded-2xl border border-white/10 text-white/40 active:scale-95 transition-all"
             >
               <div className="w-6 h-0.5 bg-current mb-1.5 rounded-full" />
               <div className="w-6 h-0.5 bg-current mb-1.5 rounded-full opacity-60" />
@@ -365,7 +366,7 @@ export default function App() {
             {activePage === 'pos' && (
               <button 
                 onClick={() => setShowCart(true)}
-                className="lg:hidden relative w-16 h-16 flex items-center justify-center bg-white/[0.03] rounded-2xl border border-white/10 text-white/40 active:scale-95 transition-all glass-panel"
+                className="lg:hidden relative w-16 h-16 flex items-center justify-center bg-white/3 rounded-2xl border border-white/10 text-white/40 active:scale-95 transition-all glass-panel"
               >
                 <ShoppingBag size={24} />
                 {cart.length > 0 && (
@@ -402,7 +403,7 @@ export default function App() {
             )}
 
             {/* Time - Luxury Style */}
-            <div className="px-8 py-4 bg-white/[0.03] border border-white/10 rounded-2.5xl backdrop-blur-3xl font-black text-lg text-white/40 min-w-[120px] text-center tracking-tighter italic">
+            <div className="px-8 py-4 bg-white/3 border border-white/10 rounded-2.5xl backdrop-blur-3xl font-black text-lg text-white/40 min-w-[120px] text-center tracking-tighter italic">
               {formatTime(time)}
             </div>
 
@@ -414,7 +415,7 @@ export default function App() {
               </div>
               <button 
                 onClick={() => setActivePage('settings')}
-                className={`w-16 h-16 flex items-center justify-center bg-white/[0.03] border-2 rounded-full text-white/30 hover:text-white transition-all duration-500 shadow-2xl ${
+                className={`w-16 h-16 flex items-center justify-center bg-white/3 border-2 rounded-full text-white/30 hover:text-white transition-all duration-500 shadow-2xl ${
                   activePage === 'settings' ? 'border-mamy-green bg-mamy-green/5' : 'border-white/10'
                 }`}
               >
