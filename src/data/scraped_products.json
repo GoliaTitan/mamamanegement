@@ -1,64 +1,133 @@
 [
   {
-    "name": "Cassata Kush | CBD >30% ,THC < 0.2%, HHC 0%",
+    "name": "PAX 2 - Vaporizzatore Portatile",
+    "description": "Vaporizzatore portatile di alta qualità per erba secca, con quattro impostazioni di temperatura.",
+    "price": "99.00",
+    "on_sale": true,
+    "sale_price": "110.00",
+    "category": "VAPE KIT CBD",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/files/P2blackinhand_600x600_81a16a64-5c72-434c-a54d-f3923472566c.png?v=1694865658",
+    "unit": "un"
+  },
+  {
+    "name": "Happy Caps Party-E",
+    "description": "Capsule energizzanti ed euforiche a base di erbe naturali, ideali per eventi sociali.",
+    "price": "20.00",
+    "on_sale": false,
+    "category": "EDIBLES",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/HappyCaps_Party-e_MockupLarge.jpg?v=1669382428",
+    "unit": "4 caps"
+  },
+  {
+    "name": "Strawberry OG - Cannabis Light",
+    "description": "Fiori di cannabis light con aroma fruttato e dolce, qualità premium.",
+    "price": "2.50",
+    "on_sale": true,
+    "sale_price": "3.00",
+    "category": "FLOWERS",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/strawberry-og.jpg",
+    "unit": "1g"
+  },
+  {
+    "name": "White Widow Original Strain",
+    "description": "Uno dei ceppi più famosi al mondo, ora disponibile in versione legale CBD.",
+    "price": "4.00",
+    "on_sale": true,
+    "sale_price": "5.00",
+    "category": "FLOWERS",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/white-widow.jpg",
+    "unit": "1g"
+  },
+  {
+    "name": "Sleep Gummies CBD e Melatonina",
+    "description": "Caramelle gommose per favorire il sonno con 15mg di CBD e 0.3mg di melatonina per gommosa.",
+    "price": "30.00",
+    "on_sale": true,
+    "sale_price": "35.00",
+    "category": "EDIBLES",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/files/sleep_gummies_4web.png?v=1754828187",
+    "unit": "30 pcs"
+  },
+  {
+    "name": "SPECIAL Bubble Hash",
+    "description": "Estratto di alta qualità con formula super strong per un'esperienza intensa.",
+    "price": "30.00",
+    "on_sale": false,
+    "category": "FLOWERS",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/bubble-hash.jpg",
+    "unit": "3g"
+  },
+  {
+    "name": "PAX Plus",
+    "description": "Il successore del PAX 3, compatibile con fiori e concentrati, con modalità Stealth e Flavor.",
+    "price": "199.00",
+    "on_sale": false,
+    "category": "VAPE KIT CBD",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/pax-plus.jpg",
+    "unit": "un"
+  },
+  {
+    "name": "Gelato - Cup Winner",
+    "description": "Varietà pluripremiata per il suo profilo terpenico unico e cremoso.",
+    "price": "4.00",
+    "on_sale": true,
+    "sale_price": "5.00",
+    "category": "FLOWERS",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/gelato.jpg",
+    "unit": "1g"
+  },
+  {
+    "name": "Happy Caps Relax-E",
+    "description": "Capsule formulate con GABA e L-Teanina per favorire il rilassamento e ridurre lo stress.",
+    "price": "20.00",
+    "on_sale": false,
+    "category": "EDIBLES",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/HappyCaps_Relax-e_MockupLarge.jpg?v=1669382431",
+    "unit": "4 caps"
+  },
+  {
+    "name": "Cassata Kush | CBD >30%",
+    "description": "E se ti dicessimo che puoi avere la Sicilia in bocca? Ricca in CBD, fiori compatti.",
     "price": "5.00",
-    "description": "E se ti dicessimo che puoi avere la Sicilia in bocca? Ricca in CBD, fiori compatti e resinosi, sapore dolce, agrumato e fruttato. Effetti rilassanti sin da subito.",
-    "images": [
-      "https://cdn.shopify.com/s/files/1/2776/2484/products/cassata.png?v=1674036410"
-    ],
-    "variants": [
-      { "title": "1g", "price": "5.00", "available": true },
-      { "title": "3g", "price": "30.00", "available": true },
-      { "title": "5g", "price": "50.00", "available": true },
-      { "title": "10g", "price": "110.00", "available": true }
-    ]
+    "on_sale": false,
+    "category": "FLOWERS",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/cassata.png?v=1674036410",
+    "unit": "1g"
   },
   {
-    "name": "Amnesia Haze Auto Femminizzata THC Seeds | THC 15-20%",
+    "name": "Amnesia Haze Auto Femminizzata",
+    "description": "L'Amnesia Haze è nota per il suo effetto psicoattivo ed energizzante.",
     "price": "35.00",
-    "description": "L'Amnesia Haze è nota per il suo effetto psicoattivo ed energizzante. Ibrido a predominanza sativa, resistente alla muffa, ideale per raccolti rapidi (10-12 settimane).",
-    "images": [
-      "https://cdn.shopify.com/s/files/1/2776/2484/files/amnesia-auto-final.png?v=1714671674"
-    ],
-    "variants": [
-      { "title": "5 semi", "price": "35.00", "available": true },
-      { "title": "10 semi", "price": "65.00", "available": true },
-      { "title": "20 semi", "price": "120.00", "available": true }
-    ]
+    "on_sale": false,
+    "category": "SEEDS",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/files/amnesia-auto-final.png?v=1714671674",
+    "unit": "5 semi"
   },
   {
-    "name": "Olio CBD 10% Mint - Alta Qualità alla Menta",
+    "name": "Olio CBD 10% Mint",
+    "description": "Olio di CBD estratto con cura dalla pianta di canapa. Proprietà antiossidanti.",
     "price": "35.00",
-    "description": "Olio di CBD estratto con cura dalla pianta di canapa. Proprietà antiossidanti, antinfiammatorie e calmanti. Registrato presso il CPNP (Cosmetic Products Notification Portal).",
-    "images": [
-      "https://cdn.shopify.com/s/files/1/2776/2484/files/mamaoil10_mint.png?v=1711213931"
-    ],
-    "variants": [
-      { "title": "Default Title", "price": "35.00", "available": true }
-    ]
+    "on_sale": false,
+    "category": "OILS",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/files/mamaoil10_mint.png?v=1711213931",
+    "unit": "10ml"
   },
   {
-    "name": "Gelato 41 CBD | CBD >25%, THC <0.2%, HHC 0%",
+    "name": "Gelato 41 CBD",
+    "description": "Una delle varietà più iconiche, con note dolci di gelato e fragranza terrosa.",
     "price": "7.00",
-    "description": "Una delle varietà più iconiche, con note dolci di gelato e fragranza terrosa. Fiori densi con elevata concentrazione di cristalli di CBD.",
-    "images": [
-      "https://cdn.shopify.com/s/files/1/2776/2484/products/gelato41.png"
-    ],
-    "variants": [
-      { "title": "1g", "price": "7.00", "available": true },
-      { "title": "3g", "price": "20.00", "available": true },
-      { "title": "5g", "price": "32.00", "available": true }
-    ]
+    "on_sale": false,
+    "category": "FLOWERS",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/gelato41.png",
+    "unit": "1g"
   },
   {
-    "name": "Crema Viso Giorno alla Canapa - 100mg CBD",
+    "name": "Crema Viso Giorno alla Canapa",
+    "description": "Crema idratante bio al CBD per migliorare la pelle.",
     "price": "29.00",
-    "description": "Crema idratante bio al CBD per migliorare la pelle. Caratteristiche antiossidanti e antinfiammatorie, ideale per ridurre l'arrossamento e regolare il sebo.",
-    "images": [
-      "https://cdn.shopify.com/s/files/1/2776/2484/products/day-cream.jpg"
-    ],
-    "variants": [
-      { "title": "Default Title", "price": "29.00", "available": true }
-    ]
+    "on_sale": false,
+    "category": "HEMP CARE",
+    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/day-cream.jpg",
+    "unit": "50ml"
   }
 ]

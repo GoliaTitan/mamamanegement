@@ -3,7 +3,7 @@ import { Search, Plus, Info, Camera, Package } from 'lucide-react';
 import Scanner from './Scanner';
 import { usePOSData } from '../hooks/usePOSData';
 
-const categories = ['FLOWERS', 'OILS', 'EDIBLES'];
+const categories = ['FLOWERS', 'OILS', 'EDIBLES', 'VAPE KIT CBD', 'HEMP CARE', 'SEEDS'];
 
 export default function POSView({ onAddToCart, t }) {
   const [activeCategory, setActiveCategory] = useState('FLOWERS');
@@ -77,20 +77,35 @@ export default function POSView({ onAddToCart, t }) {
             </button>
           </div>
           
-          <div className="flex items-center gap-3 p-1.5 bg-white/5 rounded-2xl border border-white/10">
-            {categories.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
-                className={`px-8 py-3 rounded-xl text-sm font-black tracking-widest transition-all ${
-                  activeCategory === cat 
-                  ? 'bg-white/10 text-white border border-white/20' 
-                  : 'text-white/40 hover:text-white/60 hover:bg-white/5'
-                }`}
-              >
-                {cat}
-              </button>
-            ))}
+          {/* Responsive Categories */}
+          <div className="flex items-center gap-3 p-1.5 bg-white/5 rounded-2xl border border-white/10 overflow-hidden">
+            {/* Horizontal Scroll on Desktop/Tablet */}
+            <div className="hidden md:flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5 px-0.5">
+              {categories.map(cat => (
+                <button
+                  key={cat}
+                  onClick={() => setActiveCategory(cat)}
+                  className={`px-6 py-2.5 rounded-xl text-[10px] font-black tracking-widest transition-all whitespace-nowrap ${
+                    activeCategory === cat 
+                    ? 'bg-white/10 text-white border border-white/20' 
+                    : 'text-white/40 hover:text-white/60 hover:bg-white/5'
+                  }`}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
+            {/* Dropdown on Mobile */}
+            <select 
+              className="md:hidden bg-transparent text-white/60 text-xs font-black tracking-widest px-4 py-2 outline-none w-full appearance-none"
+              value={activeCategory}
+              onChange={(e) => setActiveCategory(e.target.value)}
+            >
+              {categories.map(cat => (
+                <option key={cat} value={cat} className="bg-[#0a0a0a] text-white">{cat}</option>
+              ))}
+            </select>
           </div>
         </div>
 

@@ -18,7 +18,7 @@ export default function CashFundView({ user, onComplete, t }) {
   };
 
   return (
-    <div className="fixed inset-0 z-[100] bg-mamy-dark flex items-center justify-center p-6">
+    <div className="fixed inset-0 z-100 bg-mamy-dark flex items-center justify-center p-6">
       <div className="blur-overlay w-[600px] h-[600px] bg-emerald-500 bottom-[-100px] right-[-200px] opacity-10" />
       
       <div className="w-full max-w-lg glass-panel p-12 flex flex-col items-center">

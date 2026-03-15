@@ -17,6 +17,8 @@ export default function App() {
   const { isOnline, syncStatus, performFullSync } = useSync();
   const [user, setUser] = useState(null);
   const [initializing, setInitializing] = useState(true);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [showCart, setShowCart] = useState(false);
   
   const currentLang = user?.language || 'it';
   const t = (key) => translations[currentLang][key] || key;
@@ -227,18 +229,31 @@ export default function App() {
       case 'pos':
         return (
           <div className="flex-1 flex overflow-hidden">
-            <POSView onAddToCart={addToCart} t={t} />
-            <Cart 
-              items={cart} 
-              onUpdateQty={updateCartQty} 
-              onRemove={removeFromCart}
-              onToggleOmaggio={toggleOmaggio}
-              manualDiscount={manualDiscount}
-              onSetDiscount={setManualDiscount}
-              onCheckout={handleCheckout}
-              user={user}
-              t={t}
-            />
+            <POSView onAddToCart={(p) => {
+              addToCart(p);
+              if (window.innerWidth < 1024) setShowCart(true);
+            }} t={t} />
+            <div className={`cart-container ${showCart ? 'cart-open' : 'cart-closed'}`}>
+              {/* Mobile Cart Overlay */}
+              {showCart && (
+                <div 
+                  className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
+                  onClick={() => setShowCart(false)}
+                />
+              )}
+              <Cart 
+                items={cart} 
+                onUpdateQty={updateCartQty} 
+                onRemove={removeFromCart}
+                onToggleOmaggio={toggleOmaggio}
+                manualDiscount={manualDiscount}
+                onSetDiscount={setManualDiscount}
+                onCheckout={handleCheckout}
+                user={user}
+                t={t}
+                onClose={() => setShowCart(false)}
+              />
+            </div>
           </div>
         );
       case 'inventory':
@@ -272,10 +287,15 @@ export default function App() {
     }
   };
 
+  const toggleMobileMenu = () => setShowMobileMenu(!showMobileMenu);
+
   console.log('Rendering App with user:', user?.name, 'page:', activePage);
 
   return (
-    <div className="flex h-screen overflow-hidden text-white">
+    <div className="flex h-screen overflow-hidden text-white font-outfit relative">
+      {/* Premium Background Layer */}
+      <div className="custom-bg" style={{ backgroundImage: 'url("/bg_mamy_placeholder.jpg")' }} />
+      
       {/* Background blobs for depth */}
       <div className="blur-overlay w-[600px] h-[600px] bg-mamy-green top-[-200px] left-[-200px]" />
       <div className="blur-overlay w-[400px] h-[400px] bg-emerald-500 bottom-[-100px] right-[20%] opacity-10" />
@@ -283,21 +303,35 @@ export default function App() {
       {/* Main Layout */}
       <Sidebar 
         activePage={activePage} 
-        onNavigate={setActivePage} 
+        onNavigate={(page) => {
+          setActivePage(page);
+          setShowMobileMenu(false);
+        }} 
         onLogout={handleLogout} 
         onRequestClose={() => setShowClosingSession(true)}
         user={user} 
         t={t}
+        isOpen={showMobileMenu}
+        onClose={() => setShowMobileMenu(false)}
       />
 
-      <main className="flex-1 flex flex-col min-w-0 h-full relative z-10">
+      <main className="flex-1 flex flex-col min-w-0 h-full relative z-10 transition-all duration-300">
         {/* Header matching mockup */}
-        <header className="h-[100px] flex items-center justify-between px-8">
-          <div className="flex-1 flex items-center">
+        <header className="h-[80px] md:h-[100px] flex items-center justify-between px-4 md:px-8">
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={toggleMobileMenu}
+              className="lg:hidden p-3 bg-white/5 rounded-2xl border border-white/10 text-white/60 active:scale-95 transition-all"
+            >
+              <div className="w-5 h-0.5 bg-current mb-1 rounded-full" />
+              <div className="w-5 h-0.5 bg-current mb-1 rounded-full" />
+              <div className="w-3 h-0.5 bg-current rounded-full" />
+            </button>
+            
             {activePage === 'pos' && (
               <div className="flex flex-col">
-                <h2 className="text-2xl font-black text-white/90">MamaMary</h2>
-                <span className="text-[10px] font-black text-mamy-green/60 uppercase tracking-widest italic">
+                <h2 className="text-xl md:text-2xl font-black text-white/90">MamaMary</h2>
+                <span className="text-[8px] md:text-[10px] font-black text-mamy-green/60 uppercase tracking-widest italic">
                   Terminal ID: MM-001 • {user.role === 'developer' ? 'Root Mode' : `Fondo: ${cashFund}€`}
                 </span>
               </div>
@@ -305,9 +339,23 @@ export default function App() {
           </div>
 
           <div className="flex items-center gap-4">
+            {activePage === 'pos' && (
+              <button 
+                onClick={() => setShowCart(true)}
+                className="lg:hidden relative p-3 bg-white/5 rounded-2xl border border-white/10 text-white/60 active:scale-95 transition-all"
+              >
+                <ShoppingBag size={20} />
+                {cart.length > 0 && (
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-mamy-green text-black text-[10px] font-black rounded-full flex items-center justify-center">
+                    {cart.length}
+                  </span>
+                )}
+              </button>
+            )}
+            
             {/* Location Selector */}
-            <div className="flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md">
-              <span className="text-sm font-bold text-white/60">{user.store?.name || 'Roma Centro'}</span>
+            <div className="hidden sm:flex items-center gap-3 px-6 py-3 bg-white/5 border border-white/10 rounded-2xl backdrop-blur-md">
+              <span className="text-sm font-bold text-white/60 text-ellipsis overflow-hidden whitespace-nowrap max-w-[150px]">{user.store?.name || 'Roma Centro'}</span>
             </div>
 
             {/* Sync Status - Only for Manager+ */}

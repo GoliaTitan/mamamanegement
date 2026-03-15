@@ -2,92 +2,105 @@
 
 @theme {
   --color-mamy-green: #39d353;
-  --color-mamy-dark: #0d1117;
-  --color-mamy-glass-bg: rgba(255, 255, 255, 0.05);
-  --color-mamy-glass-border: rgba(255, 255, 255, 0.1);
-  --radius-2xl: 1rem;
-  --radius-3xl: 1.5rem;
-}
-
-:root {
-  --mamy-green: #39d353;
-  --mamy-dark: #0d1117;
+  --color-mamy-dark: #050505;
+  --color-mamy-gold: #daa520;
+  --font-outfit: 'Outfit', sans-serif;
 }
 
 @layer base {
   body {
-    @apply bg-[#0d1117] text-white font-sans antialiased min-h-screen;
-    /* Rich background with depth */
-    background: 
-      radial-gradient(circle at 0% 0%, rgba(57, 211, 83, 0.04) 0%, transparent 40%),
-      radial-gradient(circle at 100% 100%, rgba(57, 211, 83, 0.04) 0%, transparent 40%),
-      linear-gradient(to bottom right, #0d1117, #080a0c);
+    @apply bg-[#050505] text-white antialiased overflow-hidden font-outfit;
+    background: radial-gradient(circle at 0% 0%, rgba(57, 211, 83, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(57, 211, 83, 0.05) 0%, transparent 40%),
+                #050505;
     background-attachment: fixed;
   }
 }
 
 @layer components {
   .glass-panel {
-    @apply bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.06)] backdrop-blur-3xl rounded-[2rem] shadow-[0_10px_50px_rgba(0,0,0,0.5)];
+    @apply bg-white/3 border border-white/8 backdrop-blur-[40px] rounded-[2.5rem] shadow-[0_20px_60px_rgba(0,0,0,0.6)];
   }
 
   .glass-card {
-    @apply bg-[rgba(255,255,255,0.03)] border border-[rgba(255,255,255,0.07)] backdrop-blur-xl rounded-2xl transition-all duration-300 hover:bg-[rgba(255,255,255,0.05)];
+    @apply bg-white/2 border border-white/5 backdrop-blur-[20px] rounded-[2rem] transition-all duration-500 hover:bg-white/4 hover:border-mamy-green/20 hover:-translate-y-1 shadow-lg hover:shadow-2xl;
   }
   
   .glass-input {
-    @apply bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 outline-none focus:border-mamy-green/40 focus:bg-white/10 transition-all placeholder:text-white/20;
+    @apply bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:border-mamy-green/30 focus:bg-white/10 transition-all placeholder:text-white/20 font-medium;
   }
 
   .btn-mamy {
-    @apply bg-mamy-green text-black font-bold py-2.5 px-6 rounded-xl hover:brightness-110 active:scale-[0.98] transition-all shadow-[0_4px_20px_rgba(57,211,83,0.3)];
+    @apply bg-mamy-green text-black font-black py-4 px-8 rounded-2xl hover:brightness-110 active:scale-95 transition-all shadow-[0_10px_30px_rgba(57,211,83,0.2)] uppercase tracking-widest text-xs italic;
   }
   
   .btn-glass {
-    @apply bg-white/5 border border-white/10 rounded-xl px-4 py-2 text-sm font-medium hover:bg-white/10 active:scale-95 transition-all;
-  }
-
-  .category-pill {
-    @apply px-6 py-2 rounded-xl text-sm font-bold tracking-wide transition-all border border-white/5;
-  }
-  
-  .category-pill-active {
-    @apply bg-white text-black shadow-lg;
-  }
-
-  .category-pill-inactive {
-    @apply bg-white/5 text-white/50 hover:bg-white/10 hover:text-white;
-  }
-  
-  /* Selection styling */
-  ::selection {
-    background: rgba(57, 211, 83, 0.3);
-    color: white;
-  }
-  
-  /* Custom scrollbar for premium feel */
-  ::-webkit-scrollbar {
-    width: 6px;
-  }
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
-  ::-webkit-scrollbar-thumb {
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 10px;
-  }
-  ::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 255, 255, 0.2);
+    @apply bg-white/5 border border-white/10 rounded-2xl px-6 py-3 text-sm font-bold hover:bg-white/10 active:scale-95 transition-all text-white/60 hover:text-white;
   }
 }
 
-.mamy-gradient-text {
-  @apply bg-clip-text text-transparent bg-gradient-to-r from-mamy-green to-emerald-400;
-}
-
+/* Background Blobs */
 .blur-overlay {
-  position: absolute;
-  filter: blur(80px);
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(140px);
+  z-index: 0;
   opacity: 0.15;
+  pointer-events: none;
+}
+
+/* Custom Background Image Support */
+.custom-bg {
+  position: fixed;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
   z-index: -1;
+  opacity: 0.3;
+  filter: brightness(0.4) contrast(1.1);
+  transition: opacity 1s ease-in-out;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(57, 211, 83, 0.3);
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Cart Responsive Positioning */
+.cart-container {
+  @apply fixed inset-y-0 right-0 z-50 transition-transform duration-500 lg:relative lg:translate-x-0;
+}
+.cart-open {
+  @apply translate-x-0;
+}
+.cart-closed {
+  @apply translate-x-full lg:translate-x-0;
 }

@@ -12,7 +12,7 @@ import {
   BookUser
 } from 'lucide-react';
 
-export default function Sidebar({ activePage, onNavigate, onLogout, user, t }) {
+export default function Sidebar({ activePage, onNavigate, onLogout, user, t, isOpen, onClose }) {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { id: 'pos', label: t('pos'), icon: ShoppingBag },
@@ -49,7 +49,19 @@ export default function Sidebar({ activePage, onNavigate, onLogout, user, t }) {
   });
 
   return (
-    <aside className="w-[280px] h-screen flex flex-col p-6 z-20">
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm z-90 lg:hidden"
+          onClick={onClose}
+        />
+      )}
+
+      <aside className={`
+        fixed inset-y-0 left-0 w-[280px] bg-[#0a0a0a]/90 backdrop-blur-2xl border-r border-white/5 p-6 z-100 transition-transform duration-500 lg:relative lg:translate-x-0
+        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+      `}>
       {/* Brand */}
       <div className="flex flex-col items-center mb-12">
         <div className="w-48 h-48 flex items-center justify-center overflow-hidden">
@@ -103,5 +115,6 @@ export default function Sidebar({ activePage, onNavigate, onLogout, user, t }) {
         </button>
       </div>
     </aside>
+    </>
   );
 }
