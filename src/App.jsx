@@ -8,8 +8,9 @@ import OpeningCheckView from './components/OpeningCheckView';
 import DirectoryView from './components/DirectoryView';
 import InventoryView from './components/InventoryView';
 import ClosingSessionView from './components/ClosingSessionView';
+import DashboardView from './components/DashboardView';
 import DeveloperSettings from './components/DeveloperSettings';
-import { Bell, User, MapPin, BookUser, Cloud, CloudOff, RefreshCw, ShoppingBag, ShoppingCart } from 'lucide-react';
+import { Bell, User, MapPin, BookUser, Cloud, CloudOff, RefreshCw, ShoppingBag, ShoppingCart, Search } from 'lucide-react';
 import { initLocalDB, db } from './lib/db';
 import { useSync } from './hooks/useSync';
 import { translations } from './lib/translations';
@@ -25,7 +26,7 @@ export default function App() {
   const currentLang = user?.language || 'it';
   const t = (key) => translations[currentLang][key] || key;
   const [cashFund, setCashFund] = useState(null);
-  const [activePage, setActivePage] = useState('pos');
+  const [activePage, setActivePage] = useState('dashboard');
   const [time, setTime] = useState(new Date());
   const [showOpeningCheck, setShowOpeningCheck] = useState(false);
   const [showClosingSession, setShowClosingSession] = useState(false);
@@ -244,33 +245,35 @@ export default function App() {
 
   const renderContent = () => {
     switch (activePage) {
+      case 'dashboard':
+        return <DashboardView user={user} t={t} />;
       case 'pos':
         return (
-          <div className="flex-1 flex overflow-hidden">
+          <div className="flex-1 flex overflow-hidden lg:pl-4 lg:pr-8 gap-6 h-full pb-4 items-stretch">
             <POSView onAddToCart={(p) => {
               addToCart(p);
               if (window.innerWidth < 1024) setShowCart(true);
             }} t={t} />
-            <div className={`cart-container ${showCart ? 'cart-open' : 'cart-closed'}`}>
-              {/* Mobile Cart Overlay */}
-              {showCart && (
-                <div 
-                  className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 lg:hidden"
-                  onClick={() => setShowCart(false)}
-                />
-              )}
-              <Cart 
-                items={cart} 
-                onUpdateQty={updateCartQty} 
-                onRemove={removeFromCart}
-                onToggleOmaggio={toggleOmaggio}
-                manualDiscount={manualDiscount}
-                onSetDiscount={setManualDiscount}
-                onCheckout={handleCheckout}
-                user={user}
-                t={t}
-                onClose={() => setShowCart(false)}
-              />
+            <div className={`fixed inset-0 lg:relative lg:inset-auto z-50 lg:z-auto transition-transform duration-500 ${showCart ? 'translate-x-0' : 'translate-x-full'} lg:translate-x-0 w-full lg:w-[320px] xl:w-[380px] shrink-0 h-full`}>
+               {/* Mobile Cart Overlay */}
+               {showCart && (
+                 <div 
+                   className="fixed inset-0 bg-black/60 backdrop-blur-sm -z-10 lg:hidden"
+                   onClick={() => setShowCart(false)}
+                 />
+               )}
+               <Cart 
+                 items={cart} 
+                 onUpdateQty={updateCartQty} 
+                 onRemove={removeFromCart}
+                 onToggleOmaggio={toggleOmaggio}
+                 manualDiscount={manualDiscount}
+                 onSetDiscount={setManualDiscount}
+                 onCheckout={handleCheckout}
+                 user={user}
+                 t={t}
+                 onClose={() => setShowCart(false)}
+               />
             </div>
           </div>
         );
@@ -282,26 +285,11 @@ export default function App() {
         if (user.role === 'developer' || user.role === 'admin' || user.role === 'manager' || user.role === 'warehouse') {
           return <DeveloperSettings user={user} onUpdateUser={handleUpdateSessionUser} onLogout={handleLogout} onSync={performFullSync} syncStatus={syncStatus} t={t} />;
         }
-        setActivePage('pos');
-        return <POSView onAddToCart={addToCart} t={t} />;
+        setActivePage('dashboard');
+        return <DashboardView user={user} t={t} />;
       default:
-        console.warn('Unknown page, defaulting to POS');
-        return (
-          <div className="flex-1 flex overflow-hidden">
-            <POSView onAddToCart={addToCart} t={t} />
-            <Cart 
-              items={cart} 
-              onUpdateQty={updateCartQty} 
-              onRemove={removeFromCart}
-              onToggleOmaggio={toggleOmaggio}
-              manualDiscount={manualDiscount}
-              onSetDiscount={setManualDiscount}
-              onCheckout={handleCheckout}
-              user={user}
-              t={t}
-            />
-          </div>
-        );
+        console.warn('Unknown page, defaulting to Dashboard');
+        return <DashboardView user={user} t={t} />;
     }
   };
 
@@ -310,14 +298,7 @@ export default function App() {
   console.log('Rendering App with user:', user?.name, 'page:', activePage);
 
   return (
-    <div className="flex h-screen overflow-hidden text-white font-outfit relative">
-      {/* Premium Background Layer */}
-      <div className="custom-bg" style={{ backgroundImage: 'url("/bg_mamy.jpg")', opacity: 0.4 }} />
-      
-      {/* Background blobs for depth - Enhanced blur and scale */}
-      <div className="blur-overlay w-[800px] h-[800px] bg-mamy-green/20 top-[-300px] left-[-300px]" />
-      <div className="blur-overlay w-[600px] h-[600px] bg-mamy-gold/10 bottom-[-150px] right-[10%]" />
-      <div className="blur-overlay w-[400px] h-[400px] bg-emerald-500/10 top-[20%] right-[-100px]" />
+    <div className="flex h-screen overflow-hidden text-white relative bg-transparent p-2 md:p-4 gap-2 md:gap-4">
 
       {/* Main Layout */}
       <Sidebar 
@@ -335,98 +316,82 @@ export default function App() {
       />
 
       <main className="flex-1 flex flex-col min-w-0 h-full relative z-10 transition-all duration-300">
-        {/* Header matching mockup */}
-        <header className="h-[100px] md:h-[120px] flex items-center justify-between px-8 md:px-12 relative overflow-hidden backdrop-blur-md border-b border-white/10">
-          <div className="absolute inset-0 bg-linear-to-r from-mamy-green/5 via-transparent to-mamy-gold/5" />
-          
-          <div className="flex items-center gap-6 relative z-10">
+        {/* Modern Floating Top Bar */}
+        <header className="flex items-center justify-between shrink-0 mb-4 px-2">
+          {/* Mobile Menu Toggle & Brand */}
+          <div className="flex items-center gap-4">
             <button 
               onClick={toggleMobileMenu}
-              className="lg:hidden w-14 h-14 flex flex-col items-center justify-center bg-white/3 rounded-2xl border border-white/10 text-white/40 active:scale-95 transition-all"
+              className="lg:hidden p-2 text-white bg-white/5 rounded-full backdrop-blur-md border border-white/10"
             >
-              <div className="w-6 h-0.5 bg-current mb-1.5 rounded-full" />
-              <div className="w-6 h-0.5 bg-current mb-1.5 rounded-full opacity-60" />
-              <div className="w-4 h-0.5 bg-current rounded-full opacity-30" />
+              <div className="w-5 h-0.5 bg-current mb-1 rounded-full" />
+              <div className="w-5 h-0.5 bg-current mb-1 rounded-full" />
+              <div className="w-4 h-0.5 bg-current rounded-full" />
             </button>
             
+            <div className="hidden lg:flex items-center gap-3">
+               <img src="/logo_gold.png" alt="MamaMary Logo" className="w-8 h-8 object-contain drop-shadow-lg" />
+               <span className="text-xl font-bold tracking-wide text-white">MamaMary <span className="font-normal text-white/60">Gestionale</span></span>
+            </div>
+            
+            {/* Contextual Title for mobile */}
             {activePage === 'pos' && (
-              <div className="flex flex-col">
-                <h2 className="text-3xl font-black text-white/95 tracking-tighter italic">MamaMary</h2>
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-mamy-green animate-pulse" />
-                  <span className="text-[10px] font-black text-mamy-green/60 uppercase tracking-[0.3em] italic">
-                    {user.role === 'developer' ? 'System Root' : `Store Terminal • ${cashFund}€`}
-                  </span>
-                </div>
-              </div>
+              <span className="lg:hidden text-lg font-semibold tracking-tight text-white">Vendita</span>
             )}
           </div>
 
-          <div className="flex items-center gap-6 relative z-10">
+          <div className="flex items-center gap-4">
             {activePage === 'pos' && (
               <button 
                 onClick={() => setShowCart(true)}
-                className="lg:hidden relative w-16 h-16 flex items-center justify-center bg-white/3 rounded-2xl border border-white/10 text-white/40 active:scale-95 transition-all glass-panel"
+                className="lg:hidden relative p-3 text-white bg-white/5 rounded-full border border-white/10 backdrop-blur-md"
               >
-                <ShoppingBag size={24} />
+                <ShoppingBag size={20} />
                 {cart.length > 0 && (
-                  <span className="absolute -top-2 -right-2 w-7 h-7 bg-mamy-green text-black text-[10px] font-black rounded-full flex items-center justify-center shadow-lg shadow-mamy-green/30 pulse">
+                  <span className="absolute -top-1 -right-1 w-5 h-5 bg-mamy-glow text-black text-xs font-bold rounded-full flex items-center justify-center">
                     {cart.length}
                   </span>
                 )}
               </button>
             )}
             
-            {/* Sync Status - Premium Redesign */}
-            {user && ['manager', 'admin', 'developer'].includes(user.role) && (
-              <div className={`px-5 py-4 rounded-2.5xl backdrop-blur-3xl flex items-center gap-3 border transition-all duration-700 ${
-                syncStatus === 'syncing' ? 'bg-indigo-500/10 border-indigo-500/30 text-indigo-400' :
-                syncStatus === 'error' ? 'bg-red-500/10 border-red-500/30 text-red-500' :
-                !isOnline ? 'bg-mamy-gold/10 border-mamy-gold/30 text-mamy-gold' :
-                'bg-mamy-green/10 border-mamy-green/30 text-mamy-green'
-              }`}>
-                <div className="relative">
-                  {syncStatus === 'syncing' ? <RefreshCw size={18} className="animate-spin" /> :
-                   syncStatus === 'error' ? <CloudOff size={18} /> :
-                   !isOnline ? <CloudOff size={18} /> :
-                   <Cloud size={18} />}
-                  {isOnline && syncStatus !== 'syncing' && (
-                    <span className="absolute -top-1 -right-1 w-2 h-2 bg-mamy-green rounded-full shadow-[0_0_8px_rgba(57,211,83,0.8)]" />
-                  )}
-                </div>
-                <span className="text-[10px] font-black uppercase tracking-[0.3em] hidden xl:inline italic">
-                  {syncStatus === 'syncing' ? 'Sincronizzazione...' :
-                   syncStatus === 'error' ? 'Errore Sync' :
-                   !isOnline ? 'Offline' : 'Cloud Active'}
-                </span>
+            {/* Floating Status & User Pill */}
+            <div className="hidden sm:flex items-center bg-white/5 border border-white/10 backdrop-blur-2xl rounded-full px-4 py-2 shadow-lg divide-x divide-white/10">
+              
+              {/* Store Name */}
+              <div className="flex items-center gap-2 text-sm font-medium text-white/80 pr-4">
+                <MapPin size={14} className="text-white/40" />
+                {user?.store?.name || 'Roma Centro'}
               </div>
-            )}
-
-            {/* Time - Luxury Style */}
-            <div className="px-8 py-4 bg-white/3 border border-white/10 rounded-2.5xl backdrop-blur-3xl font-black text-lg text-white/40 min-w-[120px] text-center tracking-tighter italic">
-              {formatTime(time)}
-            </div>
-
-            {/* User Profile - Premium Treatment */}
-            <div className="flex items-center gap-5 pl-4 border-l border-white/10">
-              <div className="hidden sm:flex flex-col items-end">
-                <span className="text-sm font-black text-white italic">{user.name}</span>
-                <span className="text-[10px] font-black text-mamy-gold uppercase tracking-[0.2em] italic">{user.role}</span>
+              
+              {/* Time */}
+              <div className="text-sm font-medium text-white/80 px-4">
+                {formatTime(time)}
               </div>
+
+              {/* Sync Status */}
+              <div className="px-4 flex items-center">
+                {syncStatus === 'syncing' ? <RefreshCw size={14} className="animate-spin text-blue-300" strokeWidth={1.5} /> :
+                 syncStatus === 'error' ? <CloudOff size={14} className="text-red-300" strokeWidth={1.5} /> :
+                 !isOnline ? <CloudOff size={14} className="text-amber-300" strokeWidth={1.5} /> :
+                 <Cloud size={14} className="text-white/50" strokeWidth={1.5} />}
+              </div>
+
+              {/* User Profile */}
               <button 
                 onClick={() => setActivePage('settings')}
-                className={`w-16 h-16 flex items-center justify-center bg-white/3 border-2 rounded-full text-white/30 hover:text-white transition-all duration-500 shadow-2xl ${
-                  activePage === 'settings' ? 'border-mamy-green bg-mamy-green/5' : 'border-white/10'
-                }`}
+                className="flex items-center gap-2 hover:bg-white/10 transition-colors pl-4 rounded-r-full"
               >
-                <User size={28} strokeWidth={2.5} />
+                <div className="w-6 h-6 rounded-full bg-mamy-forest border border-white/20 flex items-center justify-center text-white/90">
+                  <User size={12} strokeWidth={2.5}/>
+                </div>
               </button>
             </div>
           </div>
         </header>
 
         {/* Content Area */}
-        <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 flex overflow-hidden bg-transparent rounded-[32px]">
           {renderContent()}
         </div>
 

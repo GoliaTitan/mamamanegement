@@ -1,125 +1,87 @@
 @import "tailwindcss";
 
 @theme {
-  --color-mamy-green: #39d353;
-  --color-mamy-dark: #050505;
-  --color-mamy-gold: #daa520;
-  --color-mamy-gold-light: #f4d03f;
-  --font-outfit: 'Outfit', sans-serif;
+  --color-mamy-forest: #1A3626;
+  --color-mamy-sage: #85A389;
+  --color-mamy-cream: #F5F5DC;
+  --color-mamy-glow: rgba(255, 255, 255, 0.4);
+  --color-mamy-glass: rgba(255, 255, 255, 0.05);
   
-  --gradient-gold: linear-gradient(135deg, #daa520 0%, #f4d03f 50%, #daa520 100%);
-  --gradient-dark: linear-gradient(180deg, rgba(5, 5, 5, 0.8) 0%, rgba(5, 5, 5, 0.95) 100%);
+  --font-inter: 'Inter', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
 }
 
 @layer base {
   body {
-    @apply bg-[#030303] text-white antialiased overflow-hidden font-outfit;
-    background: radial-gradient(circle at 0% 0%, rgba(57, 211, 83, 0.08) 0%, transparent 50%),
-                radial-gradient(circle at 100% 100%, rgba(218, 165, 32, 0.05) 0%, transparent 50%),
-                #030303;
+    @apply text-white antialiased overflow-hidden font-inter;
+    background-color: #111a14; /* Fallback warmer dark */
+    background-image: url('/organic_nature_bg_v2.png');
+    background-size: cover;
+    background-position: center;
     background-attachment: fixed;
   }
 }
 
 @layer components {
+  /* Core Glass Panel System */
   .glass-panel {
-    @apply bg-white/3 border border-white/8 backdrop-blur-[50px] rounded-[2.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.8)];
+    @apply bg-slate-900/20 border border-white/10 backdrop-blur-3xl backdrop-saturate-50 shadow-2xl;
   }
 
-  .glass-card {
-    @apply bg-white/2 border border-white/5 backdrop-blur-[30px] rounded-4xl transition-all duration-700 hover:bg-white/6 hover:border-mamy-green/30 hover:-translate-y-2 shadow-2xl hover:shadow-mamy-green/10;
+  /* Specific Cart Panel (Darker for depth, no muddy tones) */
+  .glass-cart-panel {
+    @apply bg-slate-900/60 border border-[rgba(255,255,255,0.08)] backdrop-blur-[40px] backdrop-saturate-50 shadow-[0_0_50px_rgba(0,0,0,0.5)] rounded-3xl lg:rounded-[32px];
   }
-  
-  .glass-card-gold {
-    @apply bg-white/2 border border-mamy-gold/20 backdrop-blur-[30px] rounded-4xl transition-all duration-700 hover:bg-mamy-gold/5 hover:border-mamy-gold/40 hover:-translate-y-2 shadow-2xl;
+
+  /* Product Cards - High-tech desaturated glass */
+  .glass-product-card {
+    @apply bg-slate-900/40 border border-[rgba(255,255,255,0.08)] backdrop-blur-3xl backdrop-saturate-[0.7] rounded-[28px] transition-all duration-500 hover:bg-slate-800/60 hover:-translate-y-1 hover:border-[rgba(255,255,255,0.15)] hover:shadow-[0_15px_40px_rgba(0,0,0,0.4)];
   }
-  
+
+  /* Search & Inputs - Recessed Glass */
   .glass-input {
-    @apply bg-white/4 border border-white/10 rounded-2xl px-6 py-5 outline-none focus:border-mamy-green/40 focus:bg-white/8 transition-all placeholder:text-white/20 font-medium text-lg;
+    @apply bg-slate-900/50 border border-white/5 backdrop-blur-3xl rounded-full px-5 py-3 outline-none focus:border-[rgba(255,255,255,0.15)] focus:bg-slate-900/80 transition-all placeholder:text-white/40 text-mamy-cream font-medium shadow-inner;
   }
 
-  .btn-mamy {
-    @apply bg-mamy-green text-black font-black py-5 px-10 rounded-2xl hover:brightness-110 active:scale-95 transition-all shadow-[0_15px_40px_rgba(57,211,83,0.3)] uppercase tracking-[0.2em] text-[10px] italic;
+  /* Glow Buttons - Pale bright green */
+  .btn-glow {
+    @apply bg-white/10 border border-white/20 text-white font-medium py-3 px-6 rounded-full hover:bg-white/15 hover:border-white/30 hover:shadow-[0_0_15px_rgba(255,255,255,0.1)] active:scale-95 transition-all tracking-wide text-sm backdrop-blur-md;
   }
 
-  .btn-gold {
-    background: var(--gradient-gold);
-    @apply text-black font-black py-5 px-10 rounded-2xl hover:brightness-110 active:scale-95 transition-all shadow-[0_15px_40px_rgba(218,165,32,0.3)] uppercase tracking-[0.2em] text-[10px] italic;
+  .btn-glow-primary {
+    @apply bg-linear-to-r from-emerald-500/40 to-emerald-600/40 border border-emerald-300/40 text-white font-medium py-4 px-8 rounded-full shadow-[0_0_20px_rgba(16,185,129,0.2)] hover:shadow-[0_0_30px_rgba(16,185,129,0.4)] hover:brightness-110 backdrop-blur-xl active:scale-95 transition-all tracking-wide;
   }
   
-  .btn-glass {
-    @apply bg-white/5 border border-white/10 rounded-2xl px-8 py-5 text-sm font-black uppercase tracking-widest hover:bg-white/10 active:scale-95 transition-all text-white/50 hover:text-mamy-green;
+  /* Sidebar Pill */
+  .nav-pill-active {
+    @apply bg-white/10 text-white border border-white/10 backdrop-blur-2xl shadow-[0_2px_10px_rgba(0,0,0,0.1)] rounded-full;
   }
-
-  .text-gradient-gold {
-    background: var(--gradient-gold);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+  
+  .nav-pill-inactive {
+    @apply text-white/50 hover:bg-white/5 hover:text-white border border-transparent rounded-full;
   }
 }
 
-/* Background Blobs */
-.blur-overlay {
-  position: fixed;
-  border-radius: 50%;
-  filter: blur(140px);
-  z-index: 0;
-  opacity: 0.15;
-  pointer-events: none;
-}
-
-/* Custom Background Image Support */
-.custom-bg {
-  position: fixed;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  z-index: -1;
-  opacity: 0.3;
-  filter: brightness(0.4) contrast(1.1);
-  transition: opacity 1s ease-in-out;
-}
-
-/* Custom Scrollbar */
+/* Custom Scrollbar for Glass UI */
 ::-webkit-scrollbar {
-  width: 5px;
-  height: 5px;
+  width: 4px;
+  height: 4px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 10px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(57, 211, 83, 0.3);
+  background: rgba(133, 163, 137, 0.5); /* Sage hover */
 }
 
-.no-scrollbar {
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
-
-/* Animations */
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-10px); }
-}
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Cart Responsive Positioning */
-.cart-container {
-  @apply fixed inset-y-0 right-0 z-50 transition-transform duration-500 lg:relative lg:translate-x-0;
-}
-.cart-open {
-  @apply translate-x-0;
-}
-.cart-closed {
-  @apply translate-x-full lg:translate-x-0;
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

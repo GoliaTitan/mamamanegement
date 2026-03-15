@@ -43,15 +43,15 @@ export default function InventoryView({ t }) {
 
   return (
     <div className="flex-1 flex flex-col p-10 md:p-14 overflow-hidden relative">
-      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-12 gap-8 relative z-10">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between mb-8 gap-6 relative z-10">
         <div>
-          <div className="flex items-center gap-4 mb-2">
-            <div className="w-12 h-12 rounded-2xl bg-mamy-gold/10 flex items-center justify-center text-mamy-gold border border-mamy-gold/20 shadow-[0_0_20px_rgba(212,175,55,0.1)]">
-              <Package size={24} />
+          <div className="flex items-center gap-3 mb-1">
+            <div className="w-10 h-10 rounded-2xl bg-mamy-gold/10 flex items-center justify-center text-mamy-gold border border-mamy-gold/20 shadow-[0_0_20px_rgba(212,175,55,0.1)]">
+              <Package size={20} />
             </div>
-            <h1 className="text-5xl font-black uppercase tracking-tighter mamy-gradient-text italic leading-none">{t('inventory')}</h1>
+            <h1 className="text-3xl md:text-4xl font-black uppercase tracking-tighter mamy-gradient-text italic leading-none">{t('inventory')}</h1>
           </div>
-          <p className="text-white/20 font-black uppercase tracking-[0.4em] text-[10px] ml-16 italic">Real-time Stock Management</p>
+          <p className="text-white/20 font-black uppercase tracking-[0.3em] text-[9px] ml-14 italic">Real-time Stock Management</p>
         </div>
 
         <div className="flex flex-col sm:flex-row items-center gap-6 w-full lg:w-auto">
@@ -76,56 +76,61 @@ export default function InventoryView({ t }) {
       </div>
 
       <div className="flex-1 overflow-y-auto pr-4 no-scrollbar relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8 pb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-2 2xl:grid-cols-3 gap-6 pb-20">
           {filtered.map(p => (
-            <div key={p.id} className="glass-card p-8 flex flex-col sm:flex-row items-center gap-8 group hover:bg-white/5 hover:border-white/20 transition-all duration-500 relative overflow-hidden">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-linear-to-br from-white/5 to-transparent rounded-bl-[4rem] pointer-events-none" />
+            <div key={p.id} className="glass-card p-5 md:p-6 flex flex-col sm:flex-row items-center gap-6 group hover:bg-white/5 hover:border-white/20 transition-all duration-500 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-24 h-24 bg-linear-to-br from-white/5 to-transparent rounded-bl-[4rem] pointer-events-none" />
               
-              <div className="w-32 h-32 rounded-3xl bg-white/5 p-5 shrink-0 relative group-hover:scale-110 transition-transform duration-700 border border-white/5">
-                <img src={p.image} alt={p.name} className="w-full h-full object-contain filter drop-shadow-[0_10px_10px_rgba(0,0,0,0.5)]" />
+              <div className="w-24 h-24 rounded-3xl bg-white/5 p-4 shrink-0 relative group-hover:scale-105 transition-transform duration-700 border border-white/5">
+                <img 
+                  src={p.image} 
+                  alt={p.name} 
+                  className="w-full h-full object-contain filter drop-shadow-md" 
+                  onError={(e) => { e.target.src = '/logo.png'; e.target.classList.add('opacity-50'); }}
+                />
                 {p.stock <= 5 && (
-                  <div className="absolute -top-3 -right-3 w-10 h-10 bg-red-500 rounded-2xl flex items-center justify-center text-white shadow-lg shadow-red-500/40 animate-bounce">
-                    <AlertTriangle size={18} />
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-red-500 rounded-xl flex items-center justify-center text-white shadow-lg animate-bounce">
+                    <AlertTriangle size={14} />
                   </div>
                 )}
               </div>
 
               <div className="flex-1 min-w-0 flex flex-col justify-center text-center sm:text-left">
-                <div className="flex items-center justify-center sm:justify-start gap-2 mb-2">
-                  <span className="text-[9px] font-black text-white/20 uppercase tracking-[0.3em] italic">{p.category}</span>
-                  <div className="w-1.5 h-1.5 rounded-full bg-white/10" />
-                  <span className="text-[9px] font-black text-mamy-gold/60 uppercase tracking-[0.2em] italic">SKU-{(p.id % 1000).toString().padStart(3, '0')}</span>
+                <div className="flex items-center justify-center sm:justify-start gap-2 mb-1.5 opacity-80">
+                  <span className="text-[8px] font-bold text-white uppercase tracking-[0.2em]">{p.category}</span>
+                  <div className="w-1 h-1 rounded-full bg-white/30" />
+                  <span className="text-[8px] font-bold text-mamy-gold/80 uppercase tracking-widest">SKU-{(p.id % 1000).toString().padStart(3, '0')}</span>
                 </div>
                 
-                <h3 className="text-xl font-black text-white uppercase tracking-tight truncate leading-tight mb-6">{p.name}</h3>
+                <h3 className="text-base font-black text-white uppercase tracking-tight leading-tight line-clamp-2 mb-4">{p.name}</h3>
                 
-                <div className="flex flex-col sm:flex-row items-center gap-6">
-                  <div className="flex flex-col items-center sm:items-start">
-                    <span className="text-[8px] font-black text-white/20 uppercase tracking-[0.3em] mb-1">Stock Level</span>
-                    <div className={`text-4xl font-black italic tracking-tighter ${p.stock <= 5 ? 'text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'text-mamy-green'}`}>
+                <div className="flex flex-wrap items-center justify-center sm:justify-start gap-4 sm:gap-6 mt-auto w-full">
+                  <div className="flex flex-col items-center sm:items-start shrink-0">
+                    <span className="text-[8px] font-bold text-white/40 uppercase tracking-[0.2em] mb-0.5">Stock</span>
+                    <div className={`text-2xl font-black italic tracking-tighter ${p.stock <= 5 ? 'text-red-400 drop-shadow-[0_0_10px_rgba(239,68,68,0.3)]' : 'text-mamy-green'}`}>
                       {p.stock || 0}
-                      <span className="text-xs ml-1 opacity-30 uppercase font-black not-italic">{p.unit || 'un'}</span>
+                      <span className="text-[10px] ml-1 opacity-50 uppercase font-bold not-italic">{p.unit || 'un'}</span>
                     </div>
                   </div>
 
-                  <div className="h-10 w-px bg-white/5 hidden sm:block" />
+                  <div className="h-8 w-px bg-white/10 hidden sm:block shrink-0" />
 
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 shrink-0">
                     <button 
                       onClick={() => handleUpdateStock(p.id, -1)}
-                      className="w-12 h-12 rounded-2xl bg-white/3 border border-white/10 flex items-center justify-center text-white/40 hover:bg-white/10 hover:text-white hover:border-red-500/30 transition-all active:scale-90"
+                      className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/50 hover:bg-white/10 hover:text-white hover:border-red-500/30 transition-all active:scale-95"
                     >
-                      <Minus size={20} strokeWidth={3} />
+                      <Minus size={16} strokeWidth={3} />
                     </button>
                     <button 
                       onClick={() => handleUpdateStock(p.id, 1)}
-                      className="w-12 h-12 rounded-2xl bg-mamy-green/10 border border-mamy-green/30 flex items-center justify-center text-mamy-green hover:bg-mamy-green/20 transition-all active:scale-90 shadow-lg shadow-mamy-green/5"
+                      className="w-10 h-10 rounded-xl bg-mamy-green/10 border border-mamy-green/30 flex items-center justify-center text-mamy-green hover:bg-mamy-green/20 transition-all active:scale-95 shadow-md"
                     >
-                      <Plus size={20} strokeWidth={3} />
+                      <Plus size={16} strokeWidth={3} />
                     </button>
                     <button 
                       onClick={() => handleUpdateStock(p.id, 10)}
-                      className="px-5 h-12 rounded-2xl bg-white/3 border border-white/10 flex items-center justify-center text-[11px] font-black text-white/30 hover:bg-white/10 hover:text-white hover:border-mamy-gold/30 transition-all active:scale-95 italic"
+                      className="px-3 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-[10px] font-bold text-white/50 hover:bg-white/10 hover:text-white hover:border-mamy-gold/30 transition-all active:scale-95"
                     >
                       +10
                     </button>

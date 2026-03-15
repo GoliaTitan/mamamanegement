@@ -6,7 +6,7 @@
     "on_sale": true,
     "sale_price": "110.00",
     "category": "VAPE KIT CBD",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/files/P2blackinhand_600x600_81a16a64-5c72-434c-a54d-f3923472566c.png?v=1694865658",
+    "image": "/products/pax-2.png",
     "unit": "un"
   },
   {
@@ -15,7 +15,7 @@
     "price": "20.00",
     "on_sale": false,
     "category": "EDIBLES",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/HappyCaps_Party-e_MockupLarge.jpg?v=1669382428",
+    "image": "/products/party-e.jpg",
     "unit": "4 caps"
   },
   {
@@ -25,7 +25,7 @@
     "on_sale": true,
     "sale_price": "3.00",
     "category": "FLOWERS",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/strawberry-og.jpg",
+    "image": "/products/strawberry-og.png",
     "unit": "1g"
   },
   {
@@ -35,7 +35,7 @@
     "on_sale": true,
     "sale_price": "5.00",
     "category": "FLOWERS",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/white-widow.jpg",
+    "image": "/products/white-widow.png",
     "unit": "1g"
   },
   {
@@ -45,7 +45,7 @@
     "on_sale": true,
     "sale_price": "35.00",
     "category": "EDIBLES",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/files/sleep_gummies_4web.png?v=1754828187",
+    "image": "/products/sleep-gummies.png",
     "unit": "30 pcs"
   },
   {
@@ -54,7 +54,7 @@
     "price": "30.00",
     "on_sale": false,
     "category": "FLOWERS",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/bubble-hash.jpg",
+    "image": "/products/bubble-hash.jpg",
     "unit": "3g"
   },
   {
@@ -63,7 +63,7 @@
     "price": "199.00",
     "on_sale": false,
     "category": "VAPE KIT CBD",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/pax-plus.jpg",
+    "image": "/products/pax-plus.png",
     "unit": "un"
   },
   {
@@ -73,7 +73,7 @@
     "on_sale": true,
     "sale_price": "5.00",
     "category": "FLOWERS",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/gelato.jpg",
+    "image": "/products/gelato.png",
     "unit": "1g"
   },
   {
@@ -82,7 +82,7 @@
     "price": "20.00",
     "on_sale": false,
     "category": "EDIBLES",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/HappyCaps_Relax-e_MockupLarge.jpg?v=1669382431",
+    "image": "/products/relax-e.jpg",
     "unit": "4 caps"
   },
   {
@@ -91,7 +91,7 @@
     "price": "5.00",
     "on_sale": false,
     "category": "FLOWERS",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/cassata.png?v=1674036410",
+    "image": "/products/cassata.png",
     "unit": "1g"
   },
   {
@@ -100,7 +100,7 @@
     "price": "35.00",
     "on_sale": false,
     "category": "SEEDS",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/files/amnesia-auto-final.png?v=1714671674",
+    "image": "/products/amnesia-auto.png",
     "unit": "5 semi"
   },
   {
@@ -109,7 +109,7 @@
     "price": "35.00",
     "on_sale": false,
     "category": "OILS",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/files/mamaoil10_mint.png?v=1711213931",
+    "image": "/products/olio-mint.png",
     "unit": "10ml"
   },
   {
@@ -118,7 +118,7 @@
     "price": "7.00",
     "on_sale": false,
     "category": "FLOWERS",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/gelato41.png",
+    "image": "/products/gelato41.png",
     "unit": "1g"
   },
   {
@@ -127,7 +127,7 @@
     "price": "29.00",
     "on_sale": false,
     "category": "HEMP CARE",
-    "image": "https://cdn.shopify.com/s/files/1/2776/2484/products/day-cream.jpg",
+    "image": "/products/day-cream.jpg",
     "unit": "50ml"
   }
 ]
