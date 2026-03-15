@@ -1,0 +1,64 @@
+[
+  {
+    "name": "Cassata Kush | CBD >30% ,THC < 0.2%, HHC 0%",
+    "price": "5.00",
+    "description": "E se ti dicessimo che puoi avere la Sicilia in bocca? Ricca in CBD, fiori compatti e resinosi, sapore dolce, agrumato e fruttato. Effetti rilassanti sin da subito.",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/2776/2484/products/cassata.png?v=1674036410"
+    ],
+    "variants": [
+      { "title": "1g", "price": "5.00", "available": true },
+      { "title": "3g", "price": "30.00", "available": true },
+      { "title": "5g", "price": "50.00", "available": true },
+      { "title": "10g", "price": "110.00", "available": true }
+    ]
+  },
+  {
+    "name": "Amnesia Haze Auto Femminizzata THC Seeds | THC 15-20%",
+    "price": "35.00",
+    "description": "L'Amnesia Haze è nota per il suo effetto psicoattivo ed energizzante. Ibrido a predominanza sativa, resistente alla muffa, ideale per raccolti rapidi (10-12 settimane).",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/2776/2484/files/amnesia-auto-final.png?v=1714671674"
+    ],
+    "variants": [
+      { "title": "5 semi", "price": "35.00", "available": true },
+      { "title": "10 semi", "price": "65.00", "available": true },
+      { "title": "20 semi", "price": "120.00", "available": true }
+    ]
+  },
+  {
+    "name": "Olio CBD 10% Mint - Alta Qualità alla Menta",
+    "price": "35.00",
+    "description": "Olio di CBD estratto con cura dalla pianta di canapa. Proprietà antiossidanti, antinfiammatorie e calmanti. Registrato presso il CPNP (Cosmetic Products Notification Portal).",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/2776/2484/files/mamaoil10_mint.png?v=1711213931"
+    ],
+    "variants": [
+      { "title": "Default Title", "price": "35.00", "available": true }
+    ]
+  },
+  {
+    "name": "Gelato 41 CBD | CBD >25%, THC <0.2%, HHC 0%",
+    "price": "7.00",
+    "description": "Una delle varietà più iconiche, con note dolci di gelato e fragranza terrosa. Fiori densi con elevata concentrazione di cristalli di CBD.",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/2776/2484/products/gelato41.png"
+    ],
+    "variants": [
+      { "title": "1g", "price": "7.00", "available": true },
+      { "title": "3g", "price": "20.00", "available": true },
+      { "title": "5g", "price": "32.00", "available": true }
+    ]
+  },
+  {
+    "name": "Crema Viso Giorno alla Canapa - 100mg CBD",
+    "price": "29.00",
+    "description": "Crema idratante bio al CBD per migliorare la pelle. Caratteristiche antiossidanti e antinfiammatorie, ideale per ridurre l'arrossamento e regolare il sebo.",
+    "images": [
+      "https://cdn.shopify.com/s/files/1/2776/2484/products/day-cream.jpg"
+    ],
+    "variants": [
+      { "title": "Default Title", "price": "29.00", "available": true }
+    ]
+  }
+]
