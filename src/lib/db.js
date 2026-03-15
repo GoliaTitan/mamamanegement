@@ -2,7 +2,7 @@ import Dexie from 'dexie';
 
 export const db = new Dexie('MamaMaryPOS');
 
-db.version(7).stores({
+db.version(8).stores({
   products: 'id, name, barcode, category, is_best_seller, stock',
   sales: '++id, timestamp, storeId, status',
   sync_queue: '++id, table, operation, data, timestamp',
@@ -13,6 +13,7 @@ db.version(7).stores({
 });
 
 export const initLocalDB = async (initialProducts = []) => {
+  console.log('Initializing Local DB...');
   // Config Seed
   const cCount = await db.config.count();
   if (cCount === 0) {
@@ -27,6 +28,7 @@ export const initLocalDB = async (initialProducts = []) => {
 
   // Stores Seed
   const sCount = await db.stores.count();
+  console.log('Stores count:', sCount);
   if (sCount === 0) {
     await db.stores.bulkAdd([
       { id: 'roma_centro', name: 'MamaMary Roma Centro', address: 'Via del Corso, 1' },
