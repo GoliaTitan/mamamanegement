@@ -287,6 +287,7 @@ export default function App() {
         onLogout={handleLogout} 
         onRequestClose={() => setShowClosingSession(true)}
         user={user} 
+        t={t}
       />
 
       <main className="flex-1 flex flex-col min-w-0 h-full relative z-10">

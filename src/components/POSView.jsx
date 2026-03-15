@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Search, Plus, Info, Camera } from 'lucide-react';
+import { Search, Plus, Info, Camera, Package } from 'lucide-react';
 import Scanner from './Scanner';
 import { usePOSData } from '../hooks/usePOSData';
 

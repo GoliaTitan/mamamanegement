@@ -51,5 +51,6 @@ export function usePOSData() {
     products, 
     bestSellers: products.filter(p => p.is_best_seller),
     loading,
+    isOnline
   };
 }
