@@ -9,7 +9,7 @@ import DirectoryView from './components/DirectoryView';
 import InventoryView from './components/InventoryView';
 import ClosingSessionView from './components/ClosingSessionView';
 import DeveloperSettings from './components/DeveloperSettings';
-import { Bell, User, Search, MapPin, BookUser, Cloud, CloudOff, RefreshCw } from 'lucide-react';
+import { Bell, User, Search, MapPin, BookUser, Cloud, CloudOff, RefreshCw, ShoppingBag } from 'lucide-react';
 import { initLocalDB, db } from './lib/db';
 import { useSync } from './hooks/useSync';
 import { translations } from './lib/translations';
