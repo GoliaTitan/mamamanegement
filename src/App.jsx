@@ -113,6 +113,18 @@ export default function App() {
         checkDailyOpeningStatus(parsedUser);
       }
       setInitializing(false);
+
+      // Request camera permission for barcode scanning
+      try {
+        if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
+          // Stop all tracks immediately — we only needed to trigger the permission prompt
+          stream.getTracks().forEach(track => track.stop());
+          console.log('Camera permission granted for barcode scanning');
+        }
+      } catch (err) {
+        console.warn('Camera permission not granted:', err.message);
+      }
     };
     
     initialize();
@@ -278,7 +290,7 @@ export default function App() {
           </div>
         );
       case 'inventory':
-        return <InventoryView t={t} />;
+        return <InventoryView t={t} user={user} />;
       case 'directory':
         return <DirectoryView t={t} />;
       case 'settings':

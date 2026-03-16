@@ -194,7 +194,7 @@ export default function OpeningCheckView({ user, store, onComplete, t }) {
             </div>
 
             <button 
-              disabled={data[currentItem.id] === null || !data.photos[currentItem.id]}
+              disabled={data[currentItem.id] === null || (data[currentItem.id] === false && !data.photos[currentItem.id])}
               onClick={() => setStep(prev => prev + 1)}
               className="w-full py-5 bg-white text-black font-black uppercase tracking-widest rounded-2xl hover:scale-[1.02] active:scale-95 disabled:opacity-30 disabled:grayscale transition-all flex items-center justify-center gap-3"
             >
