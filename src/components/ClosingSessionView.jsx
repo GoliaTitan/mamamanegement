@@ -145,6 +145,7 @@ export default function ClosingSessionView({ user, onLogout, t }) {
                 <span className="absolute left-5 top-1/2 -translate-y-1/2 text-xl font-black text-mamy-green">€</span>
                 <input 
                   type="number" 
+                  inputMode="decimal"
                   value={actualCash}
                   onChange={(e) => setActualCash(e.target.value)}
                   placeholder="0.00"

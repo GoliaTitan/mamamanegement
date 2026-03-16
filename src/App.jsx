@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import Sidebar from './components/Sidebar';
 import POSView from './components/POSView';
 import Cart from './components/Cart';
-import LoginView from './components/LoginView';
 import CashFundView from './components/CashFundView';
 import OpeningCheckView from './components/OpeningCheckView';
 import DirectoryView from './components/DirectoryView';
@@ -10,6 +9,8 @@ import InventoryView from './components/InventoryView';
 import ClosingSessionView from './components/ClosingSessionView';
 import DashboardView from './components/DashboardView';
 import DeveloperSettings from './components/DeveloperSettings';
+import CheckoutModal from './components/CheckoutModal';
+import LoginView from './components/LoginView'; // Keep LoginView as it's used later
 import { Bell, User, MapPin, BookUser, Cloud, CloudOff, RefreshCw, ShoppingBag, ShoppingCart, Search } from 'lucide-react';
 import { initLocalDB, db } from './lib/db';
 import { useSync } from './hooks/useSync';
@@ -21,6 +22,7 @@ export default function App() {
   const [initializing, setInitializing] = useState(true);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
   const [showCart, setShowCart] = useState(false);
+  const [showCheckoutModal, setShowCheckoutModal] = useState(false);
   const [currentStore, setCurrentStore] = useState(null);
   
   const currentLang = user?.language || 'it';
@@ -140,16 +142,35 @@ export default function App() {
   }, [user?.storeId, user?.store]);
 
 
-  async function handleCheckout(paymentMethod = 'cash') {
-    if (cart.length === 0) return;
-
+  const handleCheckout = async (checkoutData) => {
+    const { discountAmount, giftDesc, paymentMethod } = checkoutData;
+    
+    // Calculate totals based on cart prices vs final currentPrices
     const subtotal = cart.reduce((acc, item) => acc + (item.currentPrice * item.qty), 0);
-    const totalGross = cart.reduce((acc, item) => acc + (item.price * item.qty), 0);
-    const finalTotal = Math.max(0, subtotal - manualDiscount);
-    const totalDiscount = totalGross - finalTotal;
+    const totalGross = cart.reduce((acc, item) => {
+      const maxPrice = Math.max(item.price || 0, item.currentPrice || 0);
+      return acc + (maxPrice * item.qty);
+    }, 0);
+    
+    const finalTotal = Math.max(0, subtotal - (discountAmount || 0));
+    const totalDiscount = Math.max(0, totalGross - finalTotal);
+
+    let finalCart = [...cart];
+    // If a gift was added, inject a virtual omaggio line item
+    if (giftDesc) {
+      finalCart.push({
+        id: `gift_${Date.now()}`,
+        name: `REGALO: ${giftDesc}`,
+        category: 'OMAGGIO',
+        price: 0,
+        currentPrice: 0,
+        qty: 1,
+        isOmaggio: true
+      });
+    }
 
     const saleData = {
-      items: cart,
+      items: finalCart,
       totalGross,
       totalDiscount,
       totalNet: finalTotal,
@@ -163,19 +184,23 @@ export default function App() {
       await db.sales.add({ ...saleData, status: 'pending' });
       
       // Update inventory (decrement stock)
-      for (const item of cart) {
-        const product = await db.products.get(item.id);
-        if (product) {
-          await db.products.update(item.id, { 
-            stock: Math.max(0, (product.stock || 0) - item.qty),
-            needsSync: true
-          });
+      for (const item of cart) { // Real cart items
+        if (!item.id.startsWith('gift_')) {
+          const product = await db.products.get(item.id);
+          if (product) {
+            await db.products.update(item.id, { 
+              stock: Math.max(0, (product.stock || 0) - item.qty),
+              needsSync: true
+            });
+          }
         }
       }
 
       // Clear cart
       setCart([]);
       setManualDiscount(0);
+      setShowCheckoutModal(false);
+      setShowCart(false);
       alert('Vendita completata con successo!');
     } catch (err) {
       console.error(err);
@@ -281,7 +306,7 @@ export default function App() {
                  onToggleOmaggio={toggleOmaggio}
                  manualDiscount={manualDiscount}
                  onSetDiscount={setManualDiscount}
-                 onCheckout={handleCheckout}
+                 onCheckout={() => setShowCheckoutModal(true)}
                  user={user}
                  t={t}
                  onClose={() => setShowCart(false)}
@@ -415,6 +440,19 @@ export default function App() {
           />
         )}
       </main>
+      
+      {/* Modals & Overlays */}
+      {showClosingSession && (
+        <ClosingSessionView user={user} onLogout={handleLogout} t={t} />
+      )}
+      {showCheckoutModal && (
+        <CheckoutModal 
+           total={cart.reduce((acc, item) => acc + (item.currentPrice * item.qty), 0)}
+           onComplete={handleCheckout}
+           onCancel={() => setShowCheckoutModal(false)}
+           t={t}
+        />
+      )}
     </div>
   );
 }

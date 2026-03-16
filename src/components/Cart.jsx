@@ -105,10 +105,6 @@ export default function Cart({ items, onUpdateQty, onRemove, onToggleOmaggio, ma
           <span className="text-xs font-medium text-white/60">Subtotale:</span>
           <span className="text-xs font-bold text-white/90">{subtotal.toFixed(2)}€</span>
         </div>
-        <div className="flex justify-between items-center px-1">
-          <span className="text-xs font-medium text-white/60">Tax (22% st.)</span>
-          <span className="text-xs font-bold text-white/90">{(finalTotal * 0.22).toFixed(2)}€</span>
-        </div>
         
         <div className="flex justify-between items-center px-1 pt-2">
           <span className="text-base font-bold text-white uppercase tracking-widest">TOTAL:</span>
@@ -117,7 +113,7 @@ export default function Cart({ items, onUpdateQty, onRemove, onToggleOmaggio, ma
 
         {/* Checkout Button - Glowing Action Paga e Chiudi */}
         <button 
-          onClick={() => onCheckout('card')}
+          onClick={() => onCheckout()}
           disabled={items.length === 0}
           className="w-full mt-4 btn-glow-primary flex items-center justify-center gap-2 shadow-[0_4px_30px_rgba(16,185,129,0.3)] disabled:opacity-30 disabled:grayscale text-sm py-3 px-6"
         >

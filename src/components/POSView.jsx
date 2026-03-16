@@ -71,7 +71,7 @@ export default function POSView({ onAddToCart, t }) {
         <div className="flex items-center gap-4 w-full lg:w-auto overflow-hidden">
           <button 
             onClick={() => setShowScanner(true)}
-            className="shrink-0 w-11 h-11 flex items-center justify-center bg-[rgba(255,255,255,0.05)] border border-[rgba(255,255,255,0.1)] rounded-full text-white/60 hover:text-white hover:bg-[rgba(255,255,255,0.1)] active:scale-95 transition-all shadow-lg"
+            className="shrink-0 w-11 h-11 flex items-center justify-center bg-white/5 border border-white/10 rounded-full text-white/60 hover:text-white hover:bg-white/10 active:scale-95 transition-all shadow-lg"
           >
             <Camera size={18} strokeWidth={2} />
           </button>
@@ -84,8 +84,8 @@ export default function POSView({ onAddToCart, t }) {
                 onClick={() => setActiveCategory(cat)}
                 className={`shrink-0 px-5 py-2.5 rounded-full text-[11px] font-bold uppercase tracking-wider transition-all duration-300 ${
                   activeCategory === cat
-                  ? 'bg-[rgba(255,255,255,0.15)] text-white border border-[rgba(255,255,255,0.3)] shadow-[0_4px_12px_rgba(0,0,0,0.2)]'
-                  : 'bg-transparent text-white/40 border border-transparent hover:text-white hover:bg-[rgba(255,255,255,0.05)]'
+                  ? 'bg-white/15 text-white border border-white/30 shadow-[0_4px_12px_rgba(0,0,0,0.2)]'
+                  : 'bg-transparent text-white/40 border border-transparent hover:text-white hover:bg-white/5'
                 }`}
               >
                 {cat}
@@ -114,7 +114,7 @@ export default function POSView({ onAddToCart, t }) {
                   onClick={() => handleAddToCart(p)}
                   className="shrink-0 flex items-center gap-4 p-4 glass-product-card group active:scale-[0.98] w-64 md:w-72"
                 >
-                  <div className="w-14 h-14 rounded-xl bg-[rgba(255,255,255,0.05)] p-2 shrink-0 group-hover:bg-[rgba(255,255,255,0.1)] transition-colors border border-[rgba(255,255,255,0.05)]">
+                  <div className="w-14 h-14 rounded-xl bg-white/5 p-2 shrink-0 group-hover:bg-white/10 transition-colors border border-white/5">
                     <img 
                       src={p.image} 
                       alt={p.name} 

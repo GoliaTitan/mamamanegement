@@ -39,6 +39,7 @@ export default function CashFundView({ user, onComplete, t }) {
             <input
               autoFocus
               type="number"
+              inputMode="decimal"
               step="0.01"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}

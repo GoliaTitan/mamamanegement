@@ -162,7 +162,7 @@ export default function InventoryView({ t, user }) {
       {/* ======================== ADD PRODUCT MODAL ======================== */}
       {showAddForm && (
         <div className="fixed inset-0 z-100 bg-black/70 backdrop-blur-xl flex items-center justify-center p-4">
-          <div className="w-full max-w-2xl bg-slate-900 border border-white/10 rounded-[2rem] p-8 md:p-10 shadow-2xl relative animate-in zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto no-scrollbar">
+          <div className="w-full max-w-2xl bg-slate-900 border border-white/10 rounded-4xl p-8 md:p-10 shadow-2xl relative animate-in zoom-in-95 duration-300 max-h-[90vh] overflow-y-auto no-scrollbar">
             <button onClick={() => setShowAddForm(false)} className="absolute top-6 right-6 w-10 h-10 flex items-center justify-center rounded-xl bg-white/5 text-white/30 hover:text-white hover:bg-white/10 transition-all">
               <X size={20} />
             </button>
@@ -202,7 +202,7 @@ export default function InventoryView({ t, user }) {
               <div className="space-y-2">
                 <label className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em] ml-2">Prezzo (€) *</label>
                 <input 
-                  type="number" step="0.01" placeholder="0.00"
+                  type="number" step="0.01" placeholder="0.00" inputMode="decimal"
                   value={newProduct.price} onChange={e => setNewProduct({...newProduct, price: e.target.value})}
                   className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 outline-none focus:border-mamy-green/40 focus:bg-white/8 transition-all font-black text-mamy-gold text-lg"
                 />
@@ -235,7 +235,7 @@ export default function InventoryView({ t, user }) {
               <div className="space-y-2">
                 <label className="text-[9px] font-black text-white/30 uppercase tracking-[0.2em] ml-2">Stock Iniziale</label>
                 <input 
-                  type="number" placeholder="100"
+                  type="number" placeholder="100" inputMode="decimal"
                   value={newProduct.stock} onChange={e => setNewProduct({...newProduct, stock: e.target.value})}
                   className="w-full bg-white/5 border border-white/10 rounded-2xl px-6 py-4 text-sm outline-none focus:border-mamy-green/40 focus:bg-white/8 transition-all font-black text-white"
                 />

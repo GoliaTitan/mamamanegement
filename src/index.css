@@ -30,7 +30,7 @@
 
   /* Specific Cart Panel (Darker for depth, no muddy tones) */
   .glass-cart-panel {
-    @apply bg-slate-900/60 border border-[rgba(255,255,255,0.08)] backdrop-blur-[40px] backdrop-saturate-50 shadow-[0_0_50px_rgba(0,0,0,0.5)] rounded-3xl lg:rounded-[32px];
+    @apply bg-slate-900/60 border border-[rgba(255,255,255,0.08)] backdrop-blur-2xl backdrop-saturate-50 shadow-[0_0_50px_rgba(0,0,0,0.5)] rounded-3xl lg:rounded-[32px];
   }
 
   /* Product Cards - High-tech desaturated glass */
