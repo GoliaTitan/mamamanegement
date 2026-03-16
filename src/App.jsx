@@ -185,7 +185,7 @@ export default function App() {
       
       // Update inventory (decrement stock)
       for (const item of cart) { // Real cart items
-        if (!item.id.startsWith('gift_')) {
+        if (!String(item.id).startsWith('gift_')) {
           const product = await db.products.get(item.id);
           if (product) {
             await db.products.update(item.id, { 
